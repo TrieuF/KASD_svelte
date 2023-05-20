@@ -2,8 +2,11 @@ import Hapi from "@hapi/hapi";
 import Vision from "@hapi/vision";
 import Handlebars from "handlebars";
 import path from "path";
+import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import { webRoutes } from "./web-routes.js";
+import { apiRoutes } from "./api-routes.js"
+import { db } from "./models/db.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -25,7 +28,9 @@ async function init() {
         layout: true,
         isCached: false,
     });
+    db.init();
     server.route(webRoutes);
+    server.route(apiRoutes);
     await server.start();
     console.log("Server running on %s", server.info.uri);
 }
