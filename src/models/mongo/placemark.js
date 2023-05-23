@@ -11,10 +11,10 @@ const placemarkSchema = new Schema({
     },
     createdBy: {
         type: Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User",
     },
-    categories:String,
-    img:String,
+    category: String,
+    img: String
 });
 
 export const Placemark = Mongoose.model("Placemark", placemarkSchema);

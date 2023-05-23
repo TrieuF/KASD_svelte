@@ -6,8 +6,8 @@ export const placemarkApi = {
     find: {
         handler: async function (request, h) {
             try {
-                const users = await db.placemarkStore.getAllPlacemarks();
-                return users;
+                const placemarks = await db.placemarkStore.getAllPlacemarks();
+                return placemarks;
             } catch (err) {
                 return Boom.serverUnavailable("Database Error");
             }
@@ -17,13 +17,13 @@ export const placemarkApi = {
     findOne: {
         handler: async function (request, h) {
             try {
-                const user = await db.placemarkStore.getPlacemarkById(request.params.id);
-                if (!user) {
-                    return Boom.notFound("No User with this id");
+                const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
+                if (!placemark) {
+                    return Boom.notFound("No placemark with this id");
                 }
-                return user;
+                return placemark;
             } catch (err) {
-                return Boom.serverUnavailable("No User with this id");
+                return Boom.serverUnavailable("No placemark with this id");
             }
         },
     },
@@ -31,13 +31,30 @@ export const placemarkApi = {
     create: {
         handler: async function (request, h) {
             try {
-                const user = await db.placemarkStore.addPlacemark(request.payload);
-                if (user) {
-                    return h.response(user).code(201);
+                const placemark = request.payload;
+                const userid = request.params.id;
+                const newPlacemark = await db.placemarkStore.addPlacemark(userid, placemark);
+                if (newPlacemark) {
+                    return h.response(newPlacemark).code(200);
                 }
-                return Boom.badImplementation("error creating user");
+                return Boom.badImplementation("error creating placemark");
             } catch (err) {
-                return Boom.serverUnavailable("Database Error");
+                return Boom.serverUnavailable("Database Error create");
+            }
+        },
+    },
+
+    deleteOne: {
+        handler: async function (request, h) {
+            try {
+                const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
+                if (!placemark) {
+                    return Boom.notFound("No placemark with this id");
+                }
+                await db.placemarkStore.deletePlacemarkById(placemark._id);
+                return h.response().code(204);
+            } catch (err) {
+                return Boom.serverUnavailable("No placemark with this id");
             }
         },
     },
@@ -45,7 +62,7 @@ export const placemarkApi = {
     deleteAll: {
         handler: async function (request, h) {
             try {
-                await db.userStore.deleteAll();
+                await db.placemarkStore.deleteAllPlacemarks();
                 return h.response().code(204);
             } catch (err) {
                 return Boom.serverUnavailable("Database Error");

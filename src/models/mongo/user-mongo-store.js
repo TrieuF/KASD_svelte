@@ -39,7 +39,7 @@ export const userMongoStore = {
         }
     },
 
-    async deleteAll() {
+    async deleteAllUsers() {
         await User.deleteMany({});
     }
 };
