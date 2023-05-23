@@ -1,0 +1,25 @@
+<form action="/dashboard/addplacemark" method="POST">
+    <label>Enter Placemark Details</label>
+    <div class="field is horizontal">
+        <div class="field-body">
+            <div class="field">
+                <label class="label">Placemark Title</label>
+                <input class="input" type="text" placeholder="Enter placemark name" name="name">
+            </div>
+            <div class="field">
+                <label class="label">Description</label>
+                <input class="input" type="text" placeholder="Enter placemark description" name="description">
+            </div>
+            <div class="field">
+                <label class="label">Latitude</label>
+                <input class="input" type="number" min="-90" max="90" placeholder="Enter placemark latitude" name="lat">
+            </div>
+            <div class="field">
+                <label class="label">Longitude</label>
+                <input class="input" type="number" min="-180" max="180" placeholder="Enter placemark longitude"
+                       name="lng">
+            </div>
+        </div>
+    </div>
+    <button class="button is-link">Add Placemark</button>
+</form>

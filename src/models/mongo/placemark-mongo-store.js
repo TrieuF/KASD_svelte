@@ -22,6 +22,13 @@ export const placemarkMongoStore = {
         return p;
     },
 
+    async addPlacemarknoUser( placemark){
+        const newPlacemark = new Placemark(placemark);
+        const pObj = await newPlacemark.save();
+        const p = await this.getPlacemarkById(pObj._id);
+        return p;
+    },
+
     async getPlacemarksByUserId(id){
         const placemarks = await Placemark.findOne({ createdBy: id}).lean();
         return placemarks;

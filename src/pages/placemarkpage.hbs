@@ -1,0 +1,18 @@
+{{> menu}}
+
+<section class="section">
+    <div class="name">
+        {{placemark.name}}
+    </div>
+    <div class="field is horizontal">
+        <div class="field-body">
+            <div class="description">{{placemark.description}}</div>
+        </div>
+        <div class="field-body">
+            <div class="longitude">{{placemark.location.lng}}</div>
+        </div>
+        <div class="field-body">
+            <div class="latitude">{{placemark.location.lat}}</div>
+        </div>
+    </div>
+</section>
