@@ -4,6 +4,7 @@ import { validationError } from "./logger.js";
 
 export const placemarkApi = {
     find: {
+        auth: false,
         handler: async function (request, h) {
             try {
                 const placemarks = await db.placemarkStore.getAllPlacemarks();
@@ -15,6 +16,7 @@ export const placemarkApi = {
     },
 
     findOne: {
+        auth: false,
         handler: async function (request, h) {
             try {
                 const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
@@ -29,6 +31,7 @@ export const placemarkApi = {
     },
 
     create: {
+        auth: false,
         handler: async function (request, h) {
             try {
                 const placemark = request.payload;
@@ -45,6 +48,7 @@ export const placemarkApi = {
     },
 
     deleteOne: {
+        auth: false,
         handler: async function (request, h) {
             try {
                 const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
@@ -60,6 +64,7 @@ export const placemarkApi = {
     },
 
     deleteAll: {
+        auth: false,
         handler: async function (request, h) {
             try {
                 await db.placemarkStore.deleteAllPlacemarks();

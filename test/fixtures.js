@@ -44,7 +44,7 @@ export const pyramid = {
             lat: 29.97942,
             lng: 31.13430,
         },
-        category: "7 World Wonder",
+        category: "Wonder of the World",
         img: ""
     };
 
@@ -56,7 +56,7 @@ export const testPlacemarks = [
             lat: 40.44170,
             lng: 116.56647,
         },
-        category: "7 World Wonder",
+        category: "Wonder of the World",
         img: ""
     },
     {
@@ -66,7 +66,7 @@ export const testPlacemarks = [
             lat: 27.17523,
             lng: 78.04214
         },
-        category: "7 World Wonder",
+        category: "Wonder of the World",
         img: ""
     },
     {
@@ -76,7 +76,7 @@ export const testPlacemarks = [
             lat: 30.32851,
             lng: 35.44432,
         },
-        category: "7 World Wonder",
+        category: "Wonder of the World",
         img: ""
     },
     {
@@ -86,7 +86,7 @@ export const testPlacemarks = [
             lat: -13.22613,
             lng: -72.49707,
         },
-        category: "7 World Wonder",
+        category: "Wonder of the World",
         img: ""
     },
     {
@@ -96,7 +96,7 @@ export const testPlacemarks = [
             lat: 20.68444,
             lng: -88.56776,
         },
-        category: "7 World Wonder",
+        category: "Wonder of the World",
         img: ""
     },
     {
@@ -106,7 +106,7 @@ export const testPlacemarks = [
             lat: 41.89104,
             lng: 12.49137,
         },
-        category: "7 World Wonder",
+        category: "Wonder of the World",
         img: ""
     },
 ]

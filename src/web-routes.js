@@ -2,6 +2,8 @@ import { aboutController } from "./controllers/about-controller.js";
 import { accountController } from "./controllers/accounts-controller.js";
 import { dashboardController } from "./controllers/dashboard-controller.js";
 import { placemarkController } from "./controllers/placemark-controller.js";
+import { overviewController } from "./controllers/overview-controller.js";
+import { analyticsController } from "./controllers/analytics-controller.js";
 
 export const webRoutes = [
     { method: "GET", path: "/", config: accountController.index },
@@ -14,8 +16,14 @@ export const webRoutes = [
     { method: "GET", path: "/about", config: aboutController.index },
 
     { method: "GET", path: "/dashboard", config: dashboardController.index },
-    { method: "POST", path: "/dashboard/addplacemark", config: dashboardController.addPlacemark },
-    { method: "GET", path: "/dashboard/deleteplacemark/{id}", config: dashboardController.deletePlacemark },
+
+    { method: "GET", path: "/overview", config: overviewController.index },
+    { method: "POST", path: "/overview/addplacemark", config: overviewController.addPlacemark },
+    { method: "GET", path: "/overview/deleteplacemark/{id}", config: overviewController.deletePlacemark },
+
+    { method: "GET", path: "/analytics", config: analyticsController.index },
 
     { method: "GET", path: "/placemark/{id}", config: placemarkController.index},
+
+    { method: "GET", path:"/{param*}", handler: {directory: { path: "./public" } }, options: { auth: false} }
 ];

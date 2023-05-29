@@ -1,6 +1,6 @@
-import { assert } from "chai";
-import { assertSubset } from "../test-utils.js";
-import { placemarkService } from "./placemark-service.js";
+import {assert} from "chai";
+import {assertSubset} from "../test-utils.js";
+import {placemarkService} from "./placemark-service.js";
 import {pyramid, testPlacemarks, maggie} from "../fixtures.js";
 
 suite("Placemark API tests", () => {
@@ -13,11 +13,12 @@ suite("Placemark API tests", () => {
             testPlacemarks[0] = await placemarkService.createPlacemark(user._id, testPlacemarks[i]);
         }
     });
-    teardown(async () => {});
+    teardown(async () => {
+    });
 
     test("create a placemark", async () => {
         const user = await placemarkService.createUser(maggie);
-        const newPlacemark = await placemarkService.createPlacemark(user._id , pyramid);
+        const newPlacemark = await placemarkService.createPlacemark(user._id, pyramid);
         assertSubset(pyramid, newPlacemark);
         assert.isDefined(newPlacemark._id);
     });

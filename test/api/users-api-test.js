@@ -1,18 +1,18 @@
-import { assert } from "chai";
-import { assertSubset } from "../test-utils.js";
-import { placemarkService } from "./placemark-service.js";
-import { maggie, testUsers } from "../fixtures.js";
-
+import {assert} from "chai";
+import {assertSubset} from "../test-utils.js";
+import {placemarkService} from "./placemark-service.js";
+import {maggie, testUsers} from "../fixtures.js";
 
 suite("User API tests", () => {
     setup(async () => {
         await placemarkService.deleteAllUsers();
         for (let i = 0; i < testUsers.length; i += 1) {
             // eslint-disable-next-line no-await-in-loop
-           testUsers[0] = await placemarkService.createUser(testUsers[i]);
+            testUsers[0] = await placemarkService.createUser(testUsers[i]);
         }
     });
-    teardown(async () => {});
+    teardown(async () => {
+    });
 
     test("create a user", async () => {
         const newUser = await placemarkService.createUser(maggie);
