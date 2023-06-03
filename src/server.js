@@ -6,6 +6,7 @@ import Cookie from "@hapi/cookie";
 import dotenv from "dotenv";
 import Inert from "@hapi/inert";
 import Joi from "joi";
+import HapiSwagger from "hapi-swagger";
 import { fileURLToPath } from "url";
 import { webRoutes } from "./web-routes.js";
 import { apiRoutes } from "./api-routes.js";
@@ -16,6 +17,18 @@ import { maggie } from "../test/fixtures.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const result = dotenv.config();
+if (result.error){
+    console.log(result.error.message);
+    process.exit(1);
+};
+
+const swaggerOptions = {
+    info: {
+        title: "PlacemarkMap API",
+        version: "1.0",
+    },
+}
 async function init() {
     const server = Hapi.server({
         port: process.env.PORT || 3000,
@@ -24,14 +37,9 @@ async function init() {
     await server.register(Vision);
     await server.register(Cookie);
     await server.register(Inert);
+    await server.register([Inert, Vision, {plugin: HapiSwagger, options: swaggerOptions,}]);
 
     server.validator(Joi);
-
-    const result = dotenv.config();
-    if (result.error){
-        console.log(result.error.message);
-        process.exit(1);
-    };
 
     server.views({
         engines: {
