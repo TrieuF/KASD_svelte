@@ -35,7 +35,10 @@ export const overviewController = {
     deletePlacemark: {
         handler: async function (request, h) {
             const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
+            const loggedInUser = request.auth.credentials;
+            if( loggedInUser.isAdmin || placemark.createdBy.equals(loggedInUser._id) ){
             await db.placemarkStore.deletePlacemark(placemark._id);
+            }
             return h.redirect("/overview");
         }
     }

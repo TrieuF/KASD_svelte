@@ -10,6 +10,7 @@ import { webRoutes } from "./web-routes.js";
 import { apiRoutes } from "./api-routes.js"
 import { db } from "./models/db.js";
 import {accountController} from "./controllers/accounts-controller.js";
+import { maggie } from "../test/fixtures.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -52,6 +53,8 @@ async function init() {
     });
     server.auth.default("session");
     db.init();
+    const usertest = await db.userStore.getUserByEmail("maggie@simpson.com"); //creating Admin account, later seeded in deployment
+    if(!usertest){ await db.userStore.addUser(maggie);}
     server.route(webRoutes);
     server.route(apiRoutes);
     await server.start();

@@ -1,0 +1,41 @@
+{{> menu}}
+
+<form class="box" action="/placemark/{{placemark._id}}/update" method="POST">
+    <label>Update Placemark Details:</label>
+    <div class="field is-horizontal">
+        <div class="field-body">
+            <div class="field">
+                <input class="input" type="text" name="name" value="{{placemark.name}}">
+            </div>
+            <div class="field">
+                <input class="input" type="text" name="description" value="{{placemark.description}}">
+            </div>
+            <div class="field">
+                <input class="input" type="number" min="-90" max="90" name="lat" value="{{placemark.location.lat}}">
+            </div>
+            <div class="field">
+                <input class="input" type="number" min="-180" max="180" name="lng" value="{{placemark.location.lng}}">
+            </div>
+            <div class="field">
+                <div class="control">
+                    <div class="select">
+                        <select class="input" name="category">
+                            <option>Landscape feature</option>
+                            <option>National monument</option>
+                            <option>Island</option>
+                            <option>Town</option>
+                            <option>City</option>
+                            <option>Forest</option>
+                            <option>River</option>
+                            <option>Bridge</option>
+                            <option>Entertainment Venue</option>
+                            <option>Archaeological Feature</option>
+                            <option>Others</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="button is-primary">Update Track</button>
+</form>
