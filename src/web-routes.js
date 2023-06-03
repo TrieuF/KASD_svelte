@@ -29,7 +29,7 @@ export const webRoutes = [
     { method: "GET", path: "/placemark/{id}", config: placemarkController.index},
 
     { method: "GET", path: "/placemark/{id}/edit", config: editController.index},
-    { method: "POST", path: "/placemark/{id}/update", config: editController.edit},
+    { method: "POST", path: "/placemark/{id}/update", config: editController.update},
 
     { method: "GET", path: "/admin", config: adminController.index},
     { method: "GET", path: "/admin/deleteuser/{id}", config: adminController.deleteuser},

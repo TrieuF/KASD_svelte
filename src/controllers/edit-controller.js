@@ -1,4 +1,5 @@
 import {db} from "../models/db.js"
+import {PlacemarkSpec} from "../models/joi-schemas.js";
 
 export const editController = {
     index: {
@@ -18,7 +19,14 @@ export const editController = {
         }
     },
 
-    edit:{
+    update:{
+        validate: {
+            payload: PlacemarkSpec,
+            options: { abortEarly: false },
+            failAction: function (request, h, error) {
+                return h.view("editplacemarkpage", { title: "Edit error", errors: error.details }).takeover().code(400);
+            },
+        },
         handler: async function (request,h){
             const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
             const updatedPlacemark = {

@@ -4,10 +4,11 @@ import Handlebars from "handlebars";
 import path from "path";
 import Cookie from "@hapi/cookie";
 import dotenv from "dotenv";
-import Inert from "@hapi/inert"
+import Inert from "@hapi/inert";
+import Joi from "joi";
 import { fileURLToPath } from "url";
 import { webRoutes } from "./web-routes.js";
-import { apiRoutes } from "./api-routes.js"
+import { apiRoutes } from "./api-routes.js";
 import { db } from "./models/db.js";
 import {accountController} from "./controllers/accounts-controller.js";
 import { maggie } from "../test/fixtures.js";
@@ -23,6 +24,8 @@ async function init() {
     await server.register(Vision);
     await server.register(Cookie);
     await server.register(Inert);
+
+    server.validator(Joi);
 
     const result = dotenv.config();
     if (result.error){
