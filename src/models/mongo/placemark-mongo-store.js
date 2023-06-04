@@ -61,4 +61,10 @@ export const placemarkMongoStore = {
         placemarkDoc.category = updatedPlacemark.category;
         await placemarkDoc.save();
     },
+
+    async updatePlacemarkimg(updatedPlacemark) {
+        const placemark = await Placemark.findOne({ _id: updatedPlacemark._id });
+        placemark.img = updatedPlacemark.img;
+        await placemark.save();
+    },
 }

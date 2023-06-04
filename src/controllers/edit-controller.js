@@ -1,5 +1,6 @@
 import {db} from "../models/db.js"
 import {PlacemarkSpec} from "../models/joi-schemas.js";
+import {imageStore} from "../models/image-store.js";
 
 export const editController = {
     index: {
@@ -7,27 +8,26 @@ export const editController = {
             const loggedInUser = request.auth.credentials;
             const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
             const viewData = {
-                title:"Placemark Edit",
+                title: "Placemark Edit",
                 placemark: placemark,
             }
-            if( loggedInUser.isAdmin || placemark.createdBy.equals(loggedInUser._id) ){
+            if (loggedInUser.isAdmin || placemark.createdBy.equals(loggedInUser._id)) {
                 return h.view("editplacemarkpage", viewData);
-            }
-            else{
+            } else {
                 return h.redirect(`/placemark/${request.params.id}`);
             }
         }
     },
 
-    update:{
+    update: {
         validate: {
             payload: PlacemarkSpec,
-            options: { abortEarly: false },
+            options: {abortEarly: false},
             failAction: function (request, h, error) {
-                return h.view("editplacemarkpage", { title: "Edit error", errors: error.details }).takeover().code(400);
+                return h.view("editplacemarkpage", {title: "Edit error", errors: error.details}).takeover().code(400);
             },
         },
-        handler: async function (request,h){
+        handler: async function (request, h) {
             const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
             const updatedPlacemark = {
                 name: request.payload.name,
@@ -41,5 +41,50 @@ export const editController = {
             await db.placemarkStore.updatePlacemark(placemark, updatedPlacemark);
             return h.redirect("/overview");
         }
+    },
+
+    updateImage: {
+        handler: async function (request, h) {
+            try {
+                const loggedInUser = request.auth.credentials;
+                const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
+                const file = request.payload.imagefile;
+                if (loggedInUser.isAdmin || placemark.createdBy.equals(loggedInUser._id)) {
+                    if (Object.keys(file).length > 0) {
+                        const url = await imageStore.uploadImage(request.payload.imagefile);
+                        placemark.img = url;
+                        await db.placemarkStore.updatePlacemarkimg(placemark);
+                    }
+                }
+                return h.redirect(`/placemark/${request.params.id}`);
+            } catch (err) {
+                console.log(err);
+                return h.redirect(`/placemark/${request.params.id}`);
+            }
+        },
+        payload: {
+            multipart: true,
+            output: "data",
+            maxBytes: 209715200,
+            parse: true,
+        },
+    },
+
+    deleteImage: {
+        handler: async function (request, h) {
+            try {
+                const loggedInUser = request.auth.credentials;
+                const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
+                if (loggedInUser.isAdmin || placemark.createdBy.equals(loggedInUser._id)) {
+                    await imageStore.deleteImage(placemark.img);
+                    placemark.img = "";
+                    await db.placemarkStore.updatePlacemarkimg(placemark);
+                }
+                return h.redirect(`/placemark/${request.params.id}`);
+            } catch (err) {
+                console.log(err);
+                return h.redirect(`/placemark/${request.params.id}`);
+            }
+        },
     }
 }

@@ -30,11 +30,15 @@ export const webRoutes = [
 
     { method: "GET", path: "/placemark/{id}/edit", config: editController.index},
     { method: "POST", path: "/placemark/{id}/update", config: editController.update},
+    { method: "POST", path: "/placemark/{id}/uploadimage", config: editController.updateImage},
+    { method: "GET", path: "/placemark/{id}.deleteimage", config: editController.deleteImage},
 
     { method: "GET", path: "/admin", config: adminController.index},
     { method: "GET", path: "/admin/deleteuser/{id}", config: adminController.deleteuser},
 
     { method: "GET", path: "/category/{category}", config: categoryController.index},
+
+
 
     { method: "GET", path:"/{param*}", handler: {directory: { path: "./public" } }, options: { auth: false} }
 ];
