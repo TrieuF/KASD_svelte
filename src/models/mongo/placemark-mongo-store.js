@@ -6,6 +6,16 @@ export const placemarkMongoStore = {
         return placemarks;
     },
 
+    async getCountPlacemarks(){
+        const placemarks = await Placemark.countDocuments();
+        return placemarks;
+    },
+
+    async getCountPlacemarksByCategory(category){
+        const placemarks = await Placemark.countDocuments({ category: category});
+        return placemarks
+    },
+
     async getAllPlacemarksByCategory(category) {
         const placemarks = await Placemark.find({ category: category }).lean();
         return placemarks;

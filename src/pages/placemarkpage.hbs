@@ -5,27 +5,27 @@
         <div class="name title">
             {{placemark.name}}
         </div>
-        <div class="field is horizontal">
-            <div class="field-body">
-                <label>Description: </label>
-                <div>{{placemark.description}}</div>
+        <div>
+            <div>
+                <p class="title is-5">Description: </p>
+                <p class="subtitle is-6">{{placemark.description}}</p>
             </div>
-            <div class="field-body">
-                <label>Longitude: </label>
-                <div>{{placemark.location.lng}}</div>
+            <div>
+                <p class="title is-5">Latitude: </p>
+                <p class="subtitle is-6">{{placemark.location.lat}}</p>
             </div>
-            <div class="field-body">
-                <label>Latitude: </label>
-                <div>{{placemark.location.lat}}</div>
+            <div>
+                <p class="title is-5">Longitude: </p>
+                <p class="subtitle is-6">{{placemark.location.lng}}</p>
             </div>
-            <div class="field-body">
-                <label>Category: </label>
-                <div>{{placemark.category}}</div>
+            <div>
+                <p class="title is-5">Category: </p>
+                <p class="subtitle is-6">{{placemark.category}}</p>
             </div>
         </div>
-        <a href="/placemark/{{placemark._id}}/edit" class="button">Edit (Admin/Creator only)</a>
+        <a href="/placemark/{{placemark._id}}/edit" class="button is-info">Edit (Admin/Creator only)</a>
     </div>
     <div class="column">
-    {{> placemark-image}}
+        {{> placemark-image}}
     </div>
 </section>

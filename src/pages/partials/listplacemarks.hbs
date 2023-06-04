@@ -1,8 +1,26 @@
 {{#each placemarks}}
     <div class="box box-link-hover-shadow">
-        <h2 class="name">
+        <h2 class="title name is-5">
             {{name}}
         </h2>
+        <div class="columns is-vcentered">
+            <div class="column has-text-centered">
+                <p>Description: </p>
+                <p>{{description}}</p>
+            </div>
+            <div class="column has-text-centered">
+                <p>Latitude: </p>
+                <p>{{location.lat}}</p>
+            </div>
+            <div class="column has-text-centered">
+                <p>Longitude: </p>
+                <p>{{location.lng}}</p>
+            </div>
+            <div class="column has-text-centered">
+                <p>Category: </p>
+                <p>{{category}}</p>
+            </div>
+        </div>
         <a href="/placemark/{{_id}}" class="button">
       <span class="icon is-small">
         <i class="fas fa-folder-open"></i>

@@ -6,6 +6,11 @@ export const userMongoStore = {
         return us;
     },
 
+    async getCountUsers(){
+        const users = await User.countDocuments();
+        return users;
+    },
+
     async getUserById(id) {
         if (id) {
             const u = await User.findOne({ _id: id }).lean();

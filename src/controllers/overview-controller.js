@@ -5,7 +5,7 @@ export const overviewController = {
     index: {
         handler: async function (request, h) {
             const loggedInUser = request.auth.credentials;
-            const placemarks = await db.placemarkStore.getAllPlacemarks(); //later per user maybe
+            const placemarks = await db.placemarkStore.getAllPlacemarks();
             const viewData = {
                 title: "Overview",
                 user: loggedInUser,
