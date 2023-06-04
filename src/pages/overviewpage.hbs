@@ -1,7 +1,13 @@
 {{> menu active="overview"}}
 
 <section class="section">
-    {{> listplacemarks}}
-    {{> addplacemarks}}
-    {{> listcategory}}
+    <div>
+        {{> listplacemarks}}
+        {{> addplacemarks}}
+    </div>
+    <div class="card">
+        <div class="card-content">
+        {{> listcategory}}
+        </div>
+    </div>
 </section>

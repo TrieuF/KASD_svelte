@@ -47,8 +47,23 @@ export const placemarkService = {
         }
     },
 
+    async deletePlacemark(id) {
+        const res = await axios.delete(`${this.placemarkUrl}/api/placemarks/${id}`);
+        return res;
+    },
+
     async deleteAllPlacemarks(){
         const res = await axios.delete(`${this.placemarkUrl}/api/placemarks`);
         return res.data;
     },
+
+    async authenticate(user){
+        const res = await axios.post(`${this.placemarkUrl}/api/users/authenticate`, user);
+        axios.defaults.headers.common["Authorization"] = "Bearer " + res.data.token;
+        return res.data;
+    },
+
+    async clearAuth(){
+        axios.defaults.headers.common["Authorization"] = "";
+    }
 }
