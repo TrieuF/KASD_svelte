@@ -81,8 +81,6 @@ async function init() {
     });
     server.auth.default("session");
     db.init();
-    const usertest = await db.userStore.getUserByEmail("maggie@simpson.com"); //creating Admin account, later seeded in deployment
-    if(!usertest){ await db.userStore.addUser(maggie);}
     server.route(webRoutes);
     server.route(apiRoutes);
     await server.start();
