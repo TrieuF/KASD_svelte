@@ -22,6 +22,14 @@ export const seedData = {
             password: "secret",
             isAdmin: true,
         },
+        maggie: {
+            firstName: "Maggie",
+            lastName: "Simpson",
+            email: "maggie@simpson.com",
+            password: "secret",
+            isAdmin: true,
+        },
+
     },
     placemarks: {
         _model: "Placemark",

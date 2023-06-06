@@ -1,6 +1,6 @@
 import {assert} from "chai";
 import {assertSubset} from "../test-utils.js";
-import {pyramid, testPlacemarks, maggie} from "../fixtures.js";
+import {testmark, testPlacemarks, testuser} from "../fixtures.js";
 import {db} from "../../src/models/db.js";
 
 suite("Placemark Model tests", () => {
@@ -8,7 +8,7 @@ suite("Placemark Model tests", () => {
         db.init();
         await db.placemarkStore.deleteAllPlacemarks();
         await db.userStore.deleteAllUsers();
-        const user = await db.userStore.addUser(maggie);
+        const user = await db.userStore.addUser(testuser);
         for (let i = 0; i < testPlacemarks.length; i += 1) {
             // eslint-disable-next-line no-await-in-loop
             testPlacemarks[i] = await db.placemarkStore.addPlacemark(user._id, testPlacemarks[i]);
@@ -16,9 +16,9 @@ suite("Placemark Model tests", () => {
     });
 
     test("create a placemark", async () => {
-        const user = await db.userStore.addUser(maggie);
-        const newPlacemark = await db.placemarkStore.addPlacemark(user._id, pyramid);
-        assertSubset(pyramid, newPlacemark);
+        const user = await db.userStore.addUser(testuser);
+        const newPlacemark = await db.placemarkStore.addPlacemark(user._id, testmark);
+        assertSubset(testmark, newPlacemark);
         assert.isDefined(newPlacemark._id);
     });
 

@@ -1,19 +1,26 @@
 export const serviceUrl = "https://placemarkmaps.onrender.com"
 
-export const maggie = {
-    firstName: "Maggietest",
-    lastName: "Simpson",
-    email: "maggie@simpson.com",
-    password: "secret",
-    isAdmin: true,
-};
+export const testuser = {
+        firstName: "test",
+        lastName: "test",
+        email: "test@simpson.com",
+        password: "secret",
+        isAdmin: true,
+    };
 
-export const maggieCredentials = {
-    email: "maggie@simpson.com",
+export const testcredentials = {
+    email: "test@simpson.com",
     password: "secret",
 };
 
 export const testUsers = [
+    {
+        firstName: "Maggie",
+        lastName: "Simpson",
+        email: "maggie@simpson.com",
+        password: "secret",
+        isAdmin: true,
+    },
     {
         firstName: "Homer",
         lastName: "Simpson",
@@ -37,7 +44,19 @@ export const testUsers = [
     }
 ];
 
-export const pyramid = {
+export const testmark = {
+    name: "test",
+    description: "test",
+    location: {
+        lat: 29.97942,
+        lng: 31.13430,
+    },
+    category: "test",
+    img: ""
+};
+
+export const testPlacemarks = [
+    {
         name: "Great Pyramid of Giza",
         description: "a big pyramid",
         location: {
@@ -46,9 +65,7 @@ export const pyramid = {
         },
         category: "Wonder-of-the-World",
         img: ""
-    };
-
-export const testPlacemarks = [
+    },
     {
         name: "Great Wall of China",
         description: "a really long wall",

@@ -2,7 +2,7 @@ import { EventEmitter } from "events";
 import {assert} from "chai";
 import {assertSubset} from "../test-utils.js";
 import {placemarkService} from "./placemark-service.js";
-import {pyramid, testPlacemarks, maggie, maggieCredentials} from "../fixtures.js";
+import {testmark, testPlacemarks, testuser, testcredentials} from "../fixtures.js";
 
 EventEmitter.setMaxListeners(30);
 
@@ -10,20 +10,20 @@ suite("Placemark API tests", () => {
     let user = null;
 
     setup(async () => {
-        await placemarkService.createUser(maggie);
-        await placemarkService.authenticate(maggieCredentials);
+        await placemarkService.createUser(testuser);
+        await placemarkService.authenticate(testcredentials);
         await placemarkService.deleteAllPlacemarks();
         await placemarkService.deleteAllUsers();
-        user = await placemarkService.createUser(maggie);
-        await placemarkService.authenticate(maggieCredentials);
-        pyramid.createdBy = user._id;
+        user = await placemarkService.createUser(testuser);
+        await placemarkService.authenticate(testcredentials);
+        testmark.createdBy = user._id;
     });
     teardown(async () => {
     });
 
     test("create a placemark", async () => {
-        const newPlacemark = await placemarkService.createPlacemark(user._id, pyramid);
-        assertSubset(pyramid, newPlacemark);
+        const newPlacemark = await placemarkService.createPlacemark(user._id, testmark);
+        assertSubset(testmark, newPlacemark);
         assert.isDefined(newPlacemark._id);
     });
 
@@ -42,7 +42,7 @@ suite("Placemark API tests", () => {
     });
 
     test("delete a placemark", async () => {
-        const placemark = await placemarkService.createPlacemark(user._id, pyramid);
+        const placemark = await placemarkService.createPlacemark(user._id, testmark);
         const response = await placemarkService.deletePlacemark(placemark._id);
         assert.equal(response.status, 204);
         try {
@@ -66,7 +66,7 @@ suite("Placemark API tests", () => {
     });
 
     test("get a placemark", async () => {
-        const placemarktest = await placemarkService.createPlacemark(user._id, pyramid);
+        const placemarktest = await placemarkService.createPlacemark(user._id, testmark);
         const returnedplacemark = await placemarkService.getPlacemark(placemarktest._id);
         assert.deepEqual(placemarktest, returnedplacemark);
     });
@@ -82,7 +82,7 @@ suite("Placemark API tests", () => {
     });
 
     test("get a placemark - deleted placemark", async () => {
-        const placemarktest = await placemarkService.createPlacemark(user._id, pyramid);
+        const placemarktest = await placemarkService.createPlacemark(user._id, testmark);
         await placemarkService.deleteAllPlacemarks();
         try {
             const returnedplacemark = await placemarkService.getPlacemark(placemarktest._id);
