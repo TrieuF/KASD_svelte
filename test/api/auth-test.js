@@ -28,7 +28,7 @@ suite("Authentication API tests", async () => {
     });
 
     test("check Unauthorized", async () => {
-        placemarkService.clearAuth();
+        await placemarkService.clearAuth();
         try {
             await placemarkService.deleteAllUsers();
             assert.fail("Route not protected");
