@@ -26,21 +26,21 @@ export const testUsers = [
         lastName: "Simpson",
         email: "homer@simpson.com",
         password: "secret",
-        isAdmin: false,
+        isAdmin: true,
     },
     {
         firstName: "Marge",
         lastName: "Simpson",
         email: "marge@simpson.com",
         password: "secret",
-        isAdmin: false,
+        isAdmin: true,
     },
     {
         firstName: "Bart",
         lastName: "Simpson",
         email: "bart@simpson.com",
         password: "secret",
-        isAdmin: false,
+        isAdmin: true,
     }
 ];
 
