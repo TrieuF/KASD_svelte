@@ -22,6 +22,14 @@ export const seedData = {
             password: "secret",
             isAdmin: true,
         },
+        maggie: {
+            firstName: "Maggie",
+            lastName: "Simpson",
+            email: "maggie@simpson.com",
+            password: "secret",
+            isAdmin: true,
+        },
+
     },
     placemarks: {
         _model: "Placemark",
@@ -34,7 +42,7 @@ export const seedData = {
             },
             category: "Wonder-of-the-World",
             img: "",
-            createdBy: "->users.bart"
+            createdBy: "->users.maggie"
         },
         wall: {
             name: "Great Wall of China",
@@ -45,7 +53,7 @@ export const seedData = {
             },
             category: "Wonder-of-the-World",
             img: "",
-            createdBy: "->users.bart"
+            createdBy: "->users.maggie"
         },
         taj: {
             name: "Taj Mahal",
@@ -56,7 +64,7 @@ export const seedData = {
             },
             category: "Wonder-of-the-World",
             img: "",
-            createdBy: "->users.bart"
+            createdBy: "->users.maggie"
         },
         petra: {
             name: "Petra",
@@ -67,7 +75,7 @@ export const seedData = {
             },
             category: "Wonder-of-the-World",
             img: "",
-            createdBy: "->users.bart"
+            createdBy: "->users.maggie"
         },
         macchu: {
             name: "Machu Picchu",
@@ -78,7 +86,7 @@ export const seedData = {
             },
             category: "Wonder-of-the-World",
             img: "",
-            createdBy: "->users.bart"
+            createdBy: "->users.maggie"
         },
         maya: {
             name: "Chichén Itzá",
@@ -89,7 +97,7 @@ export const seedData = {
             },
             category: "Wonder-of-the-World",
             img: "",
-            createdBy: "->users.bart"
+            createdBy: "->users.maggie"
         },
         colosseum: {
             name: "Colosseum",
@@ -100,7 +108,7 @@ export const seedData = {
             },
             category: "Wonder-of-the-World",
             img: "",
-            createdBy: "->users.bart"
+            createdBy: "->users.maggie"
         },
     },
 }
