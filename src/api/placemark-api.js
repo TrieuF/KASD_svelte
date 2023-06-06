@@ -45,7 +45,9 @@ export const placemarkApi = {
     },
 
     create: {
-        auth: false,
+        auth: {
+            strategy: "jwt",
+        },
         handler: async function (request, h) {
             try {
                 const placemark = request.payload;
