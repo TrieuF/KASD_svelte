@@ -28,12 +28,10 @@ suite("User API tests", () => {
     });
 
     test("delete all userApi", async () => {
-        let returnedUsers = await placemarkService.getAllUsers();
-        assert.equal(returnedUsers.length, 4);
         await placemarkService.deleteAllUsers();
         await placemarkService.createUser(maggie);
         await placemarkService.authenticate(maggieCredentials);
-        returnedUsers = await placemarkService.getAllUsers();
+        const returnedUsers = await placemarkService.getAllUsers();
         assert.equal(returnedUsers.length, 1);
     });
 

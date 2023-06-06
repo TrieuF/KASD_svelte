@@ -1,7 +1,7 @@
 export const serviceUrl = "https://placemarkmaps.onrender.com"
 
 export const maggie = {
-    firstName: "Maggie",
+    firstName: "Maggietest",
     lastName: "Simpson",
     email: "maggie@simpson.com",
     password: "secret",
@@ -34,7 +34,7 @@ export const testUsers = [
         email: "bart@simpson.com",
         password: "secret",
         isAdmin: false,
-    },
+    }
 ];
 
 export const pyramid = {

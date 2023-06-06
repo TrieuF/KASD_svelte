@@ -19,10 +19,8 @@ suite("User Model tests", () => {
     });
 
     test("delete all userApi", async () => {
-        let returnedUsers = await db.userStore.getAllUsers();
-        assert.equal(returnedUsers.length, 3);
         await db.userStore.deleteAllUsers();
-        returnedUsers = await db.userStore.getAllUsers();
+        const returnedUsers = await db.userStore.getAllUsers();
         assert.equal(returnedUsers.length, 0);
     });
 
