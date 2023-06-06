@@ -9,7 +9,8 @@ export const overviewController = {
             const viewData = {
                 title: "Overview",
                 user: loggedInUser,
-                placemarks: placemarks
+                placemarks: placemarks,
+                category: "All Categories"
             }
             return h.view("overviewpage", viewData);
         },

@@ -9,7 +9,8 @@ export const categoryController = {
             const viewData = {
                 title: "Overview",
                 user: loggedInUser,
-                placemarks: placemarks
+                placemarks: placemarks,
+                category: category
             }
             return h.view("overviewpage", viewData);
         },
