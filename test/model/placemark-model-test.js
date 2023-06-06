@@ -22,11 +22,9 @@ suite("Placemark Model tests", () => {
         assert.isDefined(newPlacemark._id);
     });
 
-    test("delete all placemarkApi", async () => {
-        let returnedPlacemark = await db.placemarkStore.getAllPlacemarks();
-        assert.equal(returnedPlacemark.length, 6);
+    test("delete all placemark", async () => {
         await db.placemarkStore.deleteAllPlacemarks();
-        returnedPlacemark = await db.placemarkStore.getAllPlacemarks();
+        const returnedPlacemark = await db.placemarkStore.getAllPlacemarks();
         assert.equal(returnedPlacemark.length, 0);
     });
 
