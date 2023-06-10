@@ -14,7 +14,8 @@ export const analyticsController = {
             const bridgelength = await db.placemarkStore.getCountPlacemarksByCategory("Bridge");
             const entertainmentlength = await db.placemarkStore.getCountPlacemarksByCategory("Entertainment-Venue");
             const archaeologicallength = await db.placemarkStore.getCountPlacemarksByCategory("Archaeological-Feature");
-            const otherslength = await db.placemarkStore.getCountPlacemarks("Others");
+            const worldwonderlength = await db.placemarkStore.getCountPlacemarksByCategory("Wonder-of-the-World");
+            const otherslength = await db.placemarkStore.getCountPlacemarksByCategory("Others");
             const viewData = {
                 title: "Analytics",
                 userlength: userlength,
@@ -29,6 +30,7 @@ export const analyticsController = {
                 bridgelength: bridgelength,
                 entertainmentlength: entertainmentlength,
                 archaeologicallength: archaeologicallength,
+                worldwonderlength: worldwonderlength,
                 otherslength: otherslength,
             }
             return h.view("analyticpage", viewData);
