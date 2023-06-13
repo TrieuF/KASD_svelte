@@ -1,6 +1,7 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
 import { validationError } from "./logger.js";
+import Joi from "joi";
 import {IdSpec, PlacemarkArraySpec, PlacemarkSpecReal, PlacemarkSpecPlus} from "../models/joi-schemas.js";
 
 export const placemarkApi = {
@@ -64,7 +65,7 @@ export const placemarkApi = {
         tags: ["api"],
         description: "Create a placemark",
         notes: "Returns the newly created placemark",
-        validate: { payload: PlacemarkSpecReal, failAction: validationError },
+        validate: { payload: PlacemarkSpecReal, params: {id: IdSpec},  failAction: validationError },
         response: { schema: PlacemarkSpecPlus, failAction: validationError },
     },
 
