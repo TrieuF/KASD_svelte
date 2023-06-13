@@ -31,7 +31,7 @@ export const PlacemarkSpec = Joi.object()
         lat: Joi.number().min(-90).max(90).example(40.44170),
         lng: Joi.number().min(-180).max(180).example(116.56647),
         category: Joi.string().required().example("Wonder of the World"),
-        createdBy: IdSpec,
+        createdBy: IdSpec.optional(),
         img: Joi.string().optional(),
     })
     .label("PlacemarkPayload")
@@ -45,7 +45,7 @@ export const PlacemarkSpecReal = Joi.object()
             lng: Joi.number().min(-180).max(180).example(116.56647),
         },
         category: Joi.string().required().example("Wonder of the World"),
-        createdBy: IdSpec,
+        createdBy: IdSpec.optional(),
         img: Joi.string().allow("").optional().example(""),
     })
     .label("PlacemarkReal")

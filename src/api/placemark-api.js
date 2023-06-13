@@ -54,6 +54,7 @@ export const placemarkApi = {
             try {
                 const placemark = request.payload;
                 const user = decodeToken(request.params.token);
+                console.log(request.params.token);
                 const userid = user.userId;
                 const newPlacemark = await db.placemarkStore.addPlacemark(userid, placemark);
                 if (newPlacemark) {
