@@ -14,5 +14,4 @@ export const apiRoutes = [
     { method: "GET", path: "/api/placemarks/{id}", config: placemarkApi.findOne },
 
     { method: "POST", path: "/api/users/authenticate", config: userApi.authenticate },
-    { method: "POST", path: "/api/users/isadmin", config: userApi.admincheck },
 ];
