@@ -53,9 +53,7 @@ export const placemarkApi = {
         handler: async function (request, h) {
             try {
                 const placemark = request.payload;
-                const user = decodeToken(request.params.token);
-                console.log(request.params.token);
-                const userid = user.userId;
+                const userid = request.auth.credentials._id;
                 const newPlacemark = await db.placemarkStore.addPlacemark(userid, placemark);
                 if (newPlacemark) {
                     return h.response(newPlacemark).code(200);
@@ -68,7 +66,7 @@ export const placemarkApi = {
         tags: ["api"],
         description: "Create a placemark",
         notes: "Returns the newly created placemark",
-        validate: { payload: PlacemarkSpecReal, params:{token: JwtAuth}, failAction: validationError },
+        validate: { payload: PlacemarkSpecReal, failAction: validationError },
         response: { schema: PlacemarkSpecPlus, failAction: validationError },
     },
 
