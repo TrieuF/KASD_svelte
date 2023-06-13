@@ -1,5 +1,5 @@
-export const serviceUrl = "http://localhost:4000"
 
+export const serviceUrl = "http://localhost:4000";
 export const testuser = {
         firstName: "test",
         lastName: "test",
