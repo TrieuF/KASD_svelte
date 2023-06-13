@@ -2,7 +2,8 @@ import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
 import { validationError } from "./logger.js";
 import Joi from "joi";
-import {IdSpec, PlacemarkArraySpec, PlacemarkSpecReal, PlacemarkSpecPlus} from "../models/joi-schemas.js";
+import {IdSpec, PlacemarkArraySpec, PlacemarkSpecReal, PlacemarkSpecPlus, JwtAuth} from "../models/joi-schemas.js";
+import {decodeToken} from "./jwt-utils.js";
 
 export const placemarkApi = {
     find: {
@@ -52,7 +53,8 @@ export const placemarkApi = {
         handler: async function (request, h) {
             try {
                 const placemark = request.payload;
-                const userid = request.params.id;
+                const user = decodeToken(request.params.token);
+                const userid = user.userId;
                 const newPlacemark = await db.placemarkStore.addPlacemark(userid, placemark);
                 if (newPlacemark) {
                     return h.response(newPlacemark).code(200);
@@ -65,7 +67,7 @@ export const placemarkApi = {
         tags: ["api"],
         description: "Create a placemark",
         notes: "Returns the newly created placemark",
-        validate: { payload: PlacemarkSpecReal, params: {id: IdSpec},  failAction: validationError },
+        validate: { payload: PlacemarkSpecReal, params:{token: JwtAuth}, failAction: validationError },
         response: { schema: PlacemarkSpecPlus, failAction: validationError },
     },
 
