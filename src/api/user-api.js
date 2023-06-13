@@ -108,30 +108,4 @@ export const userApi = {
         validate: { payload: UserCredentialsSpec, failAction: validationError },
         response: { schema: JwtAuth, failAction: validationError },
     },
-
-    admincheck:{
-        auth: false,
-        handler: async function (request, h) {
-            try {
-                const user = await db.userStore.getUserByEmail(request.payload.email);
-                if (!user) {
-                    return Boom.unauthorized("User not found");
-                }
-                if (user.password !== request.payload.password) {
-                    return Boom.unauthorized("Invalid password");
-                }
-                if (!user.isAdmin){
-                    return h.response({ success: true, isadmin: false }).code(200);
-                }
-                return h.response({ success: true, isadmin: true }).code(200);
-            } catch (err) {
-                return Boom.serverUnavailable("Database Error");
-            }
-        },
-        tags: ["api"],
-        description: "Checks if User is Admin",
-        notes: "If user has valid email/password, check if he is Admin",
-        validate: { payload: UserCredentialsSpec, failAction: validationError },
-        response: { schema: Boolean, failAction: validationError },
-    }
 };
