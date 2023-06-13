@@ -1,4 +1,4 @@
-export const serviceUrl = "https://placemarkmaps.onrender.com"
+export const serviceUrl = "http://localhost:4000"
 
 export const testuser = {
         firstName: "test",
