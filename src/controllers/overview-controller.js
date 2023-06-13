@@ -20,8 +20,9 @@ export const overviewController = {
         validate: {
             payload: PlacemarkSpec,
             options: { abortEarly: false },
-            failAction: function (request, h, error) {
-                return h.view("overviewpage", { title: "Add Placemark error", errors: error.details }).takeover().code(400);
+            failAction: async function (request, h, error) {
+                const placemarks = await db.placemarkStore.getAllPlacemarks();
+                return h.view("overviewpage", { title: "Add Placemark error",placemarks: placemarks, errors: error.details }).takeover().code(400);
             },
         },
         handler: async function (request, h) {

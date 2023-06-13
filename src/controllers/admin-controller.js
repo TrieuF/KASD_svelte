@@ -22,19 +22,11 @@ export const adminController = {
         handler: async function (request, h) {
             const deleteuser = await db.userStore.getUserById(request.params.id);
             const users = await db.userStore.getAllUsers();
-            if(!deleteuser){
+            if(deleteuser.isAdmin){
                 const viewData = {
                     title:"Admin dashboard",
                     users: users,
-                    errors: "Deleted User not findable",
-                }
-                return h.view("adminpage", viewData);
-            }
-            else if(deleteuser.isAdmin){
-                const viewData = {
-                    title:"Admin dashboard",
-                    users: users,
-                    errors: "Deleted User is a Admin",
+                    errors: {details: "User is a Admin"},
                 }
                 return h.view("adminpage", viewData);
             }else {
