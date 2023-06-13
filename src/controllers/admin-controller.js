@@ -22,14 +22,12 @@ export const adminController = {
         handler: async function (request, h) {
             const deleteuser = await db.userStore.getUserById(request.params.id);
             const users = await db.userStore.getAllUsers();
-            const error = {
-                details: "User is Admin",
-            }
+            const details= "User is Admin";
             if(deleteuser.isAdmin){
                 const viewData = {
                     title:"Admin dashboard",
                     users: users,
-                    errors: error.details,
+                    errors: details,
                 }
                 return h.view("adminpage", viewData);
             }else {
