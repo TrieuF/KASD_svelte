@@ -12,7 +12,7 @@
 
                 <div class="navbar-dropdown">
                     <div class="navbar-item">
-                        <a class="button is-fullwidth" id="overview" href="/overview">Overview</a>
+                        <a class="button is-fullwidth" id="overview" href="/maps">Maps</a>
                     </div>
                     <div class="navbar-item">
                         <a class="button is-fullwidth" id="analytic" href="/analytics">Analytics</a>

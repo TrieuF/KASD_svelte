@@ -110,27 +110,4 @@ export const userApi = {
         validate: { payload: UserCredentialsSpec, failAction: validationError },
         response: { schema: JwtAuth, failAction: validationError },
     },
-
-    admincheck: {
-        auth: false,
-        handler: async function (request, h) {
-            try {
-                const user = await db.userStore.getUserByEmail(request.payload.email);
-                if(user.isAdmin){
-                    return h.response({ success: true, isAdmin: true }).code(200);
-                }
-                else{
-                    return h.response({ success: true, isAdmin: false }).code(200);
-                }
-
-            } catch (err) {
-                return Boom.serverUnavailable("Database Error");
-            }
-        },
-        tags: ["api"],
-        description: "Authenticate  a User",
-        notes: "If user has valid email/password, create and return a JWT token",
-        validate: { payload: UserCredentialsSpec, failAction: validationError },
-    },
-
 };
