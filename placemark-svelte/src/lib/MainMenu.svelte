@@ -1,5 +1,5 @@
 <script>
-    import { user } from "../store";
+    import {user} from "../store";
 </script>
 
 <nav class="navbar" aria-label="dropdown navigation">
@@ -12,15 +12,21 @@
 
                 <div class="navbar-dropdown">
                     <div class="navbar-item">
-                        <a class="button is-fullwidth" id="overview" href="/maps">Maps</a>
+                        <a class="button is-fullwidth" id="maps" href="/maps">Maps</a>
                     </div>
                     <div class="navbar-item">
                         <a class="button is-fullwidth" id="analytic" href="/analytics">Analytics</a>
                     </div>
                     <div class="navbar-item">
-                        <a id="logout" class="button is-link" href="/logout">Logout</a>
+                        <a class="button is-fullwidth" href="/addplacemark">Add Placemark</a>
                     </div>
-                    <hr class="narbar-divider">
+                    <div class="navbar-item">
+                        <a class="button is-fullwidth" href="/imagegallery">Image Gallery</a>
+                    </div>
+                    <div class="navbar-item">
+                        <a id="logout" class="button is-fullwidth is-link" href="/logout">Logout</a>
+                    </div>
+                    <hr class="navbar-divider">
                     <div class="navbar-item">
                         {#if $user.email}
                             <div class="is-size-7">{$user.email}</div>

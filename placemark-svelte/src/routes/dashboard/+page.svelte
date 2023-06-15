@@ -18,6 +18,7 @@
                     <a class="button is-fullwidth is-danger" href="/maps">Maps</a>
                     <a class="button is-fullwidth is-primary" href="/analytics">Analytics</a>
                     <a class="button is-fullwidth is-info" href="/addplacemark">Add Placemark</a>
+                    <a class="button is-fullwidth is-warning" href="/imagegallery">Image Gallery</a>
                 </div>
             </div>
         </div>
