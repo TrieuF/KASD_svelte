@@ -1,9 +1,14 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 import * as L from "leaflet";
-import {placemarkService} from "./placemark-service.js";
-import axios from "axios";
-const apiKey = "f056af070b3bf3b0532587880c466c3d";
+import dotenv from "dotenv";
+
+const result = dotenv.config();
+if (result.error){
+    console.log(result.error.message);
+    process.exit(1);
+}
+const apiKey = process.env.openweatherapi;
 
 export class LeafletMap {
     imap = {};
@@ -101,7 +106,8 @@ export class LeafletMap {
                 })
                 .then((data) => {
                     conditions = data;});
-            popup.setContent(popupText + " Weather: " +conditions.current.weather[0].main +" Temperature: " + conditions.current.temp);
+            popup.setContent(popupText + " Weather: " +conditions.current.weather[0].main +" Temperature: " + conditions.current.temp
+            );
             marker.bindPopup(popup);
         }
         if (!this.overlays[layerTitle]) {
