@@ -15,25 +15,25 @@ suite("Placemark Model tests", () => {
         }
     });
 
-    test("create a placemark", async () => {
+    test("create a [id]", async () => {
         const user = await db.userStore.addUser(testuser);
         const newPlacemark = await db.placemarkStore.addPlacemark(user._id, testmark);
         assertSubset(testmark, newPlacemark);
         assert.isDefined(newPlacemark._id);
     });
 
-    test("delete all placemark", async () => {
+    test("delete all [id]", async () => {
         await db.placemarkStore.deleteAllPlacemarks();
         const returnedPlacemark = await db.placemarkStore.getAllPlacemarks();
         assert.equal(returnedPlacemark.length, 0);
     });
 
-    test("get a placemark - success", async () => {
+    test("get a [id] - success", async () => {
         const returnedplacemark = await db.placemarkStore.getPlacemarkById(testPlacemarks[0]._id);
         assert.deepEqual(testPlacemarks[0], returnedplacemark);
     });
 
-    test("delete one placemark - success", async () => {
+    test("delete one [id] - success", async () => {
         await db.placemarkStore.deletePlacemark(testPlacemarks[0]._id);
         const returnedPlacemarks = await db.placemarkStore.getAllPlacemarks();
         assert.equal(returnedPlacemarks.length, testPlacemarks.length - 1);
@@ -41,12 +41,12 @@ suite("Placemark Model tests", () => {
         assert.isNull(deletedPlacemark);
     });
 
-    test("get a placemark - bad params", async () => {
+    test("get a [id] - bad params", async () => {
         assert.isNull(await db.placemarkStore.getPlacemarkById(""));
         assert.isNull(await db.placemarkStore.getPlacemarkById());
     });
 
-    test("delete one placemark - fail", async () => {
+    test("delete one [id] - fail", async () => {
         await db.placemarkStore.deletePlacemark("bad-id");
         const allPlacemarks = await db.placemarkStore.getAllPlacemarks();
         assert.equal(testPlacemarks.length, allPlacemarks.length);

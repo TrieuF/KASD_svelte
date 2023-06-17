@@ -1,14 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 import * as L from "leaflet";
-import dotenv from "dotenv";
 
-const result = dotenv.config();
-if (result.error){
-    console.log(result.error.message);
-    process.exit(1);
-}
-const apiKey = process.env.openweatherapi;
+const apiKey= import.meta.env.VITE_openweatherapi;
 
 export class LeafletMap {
     imap = {};
@@ -90,11 +84,11 @@ export class LeafletMap {
         this.imap.setView(new L.LatLng(location.lat, location.lng), 8);
     }
 
-    async addMarker(location, popupText = "", layerTitle = "default") {
+    async addMarker(location, popupText = "", layerTitle = "default", placemarkid) {
         let group = {};
         let marker = L.marker([location.lat, location.lng]);
         if (popupText) {
-            var popup = L.popup({ autoClose: false, closeOnClick: false });
+            var popup = L.popup();
             //var conditions = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lng}&appid=${apiKey}`);
             var conditions;
             const requestUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${location.lat}&lon=${location.lng}&units=metric&appid=${apiKey}`;
@@ -106,8 +100,8 @@ export class LeafletMap {
                 })
                 .then((data) => {
                     conditions = data;});
-            popup.setContent(popupText + " Weather: " +conditions.current.weather[0].main +" Temperature: " + conditions.current.temp
-            );
+            popup.setContent(popupText + " | Weather: " +conditions.current.weather[0].main + " | Temperature: " + conditions.current.temp + "°C"
+            + "<a class='button' href='/dashboard/"+placemarkid +"'>Details<a/>" );
             marker.bindPopup(popup);
         }
         if (!this.overlays[layerTitle]) {
@@ -125,4 +119,5 @@ export class LeafletMap {
         let hiddenMethodMap = this.imap;
         hiddenMethodMap._onResize();
     }
+
 }

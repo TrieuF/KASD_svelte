@@ -21,13 +21,13 @@
         map.showLayerControl();
         const placemarks = await placemarkService.getAllPlacemarks();
         placemarks.forEach((placemark) => {
-            map.addMarker({ lat: placemark.location.lat, lng: placemark.location.lng }, placemark.name, "Placemarks");
+            map.addMarker({ lat: placemark.location.lat, lng: placemark.location.lng }, placemark.name, "Placemarks",placemark._id );
         });
     });
 
     latestPlacemark.subscribe((placemark) => {
         if (placemark && map) {
-            map.addMarker({ lat: placemark.location.lat, lng: placemark.location.lng }, placemark.name, "Placemarks");
+            map.addMarker({ lat: placemark.location.lat, lng: placemark.location.lng }, placemark.name, "Placemarks", placemark._id);
             map.moveTo(8, { lat: placemark.location.lat, lng: placemark.location.lng });
         }
     });

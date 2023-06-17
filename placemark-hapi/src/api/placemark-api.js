@@ -25,23 +25,21 @@ export const placemarkApi = {
     },
 
     findOne: {
-        auth: {
-            strategy: "jwt",
-        },
+        auth: false,
         handler: async function (request, h) {
             try {
                 const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
                 if (!placemark) {
-                    return Boom.notFound("No placemark with this id");
+                    return Boom.notFound("No [id] with this id");
                 }
                 return placemark;
             } catch (err) {
-                return Boom.serverUnavailable("No placemark with this id");
+                return Boom.serverUnavailable("No [id] with this id");
             }
         },
         tags: ["api"],
-        description: "Find a placemark",
-        notes: "Returns a placemark",
+        description: "Find a [id]",
+        notes: "Returns a [id]",
         validate: { params: { id: IdSpec }, failAction: validationError },
         response: { schema: PlacemarkSpecPlus, failAction: validationError },
     },
@@ -58,14 +56,14 @@ export const placemarkApi = {
                 if (newPlacemark) {
                     return h.response(newPlacemark).code(200);
                 }
-                return Boom.badImplementation("error creating placemark");
+                return Boom.badImplementation("error creating [id]");
             } catch (err) {
                 return Boom.serverUnavailable("Database Error create");
             }
         },
         tags: ["api"],
-        description: "Create a placemark",
-        notes: "Returns the newly created placemark",
+        description: "Create a [id]",
+        notes: "Returns the newly created [id]",
         validate: { payload: PlacemarkSpecReal, failAction: validationError },
         response: { schema: PlacemarkSpecPlus, failAction: validationError },
     },
@@ -83,16 +81,16 @@ export const placemarkApi = {
                 }
                 const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
                 if (!placemark) {
-                    return Boom.notFound("No placemark with this id");
+                    return Boom.notFound("No [id] with this id");
                 }
                 await db.placemarkStore.deletePlacemark(placemark._id);
                 return h.response().code(204);
             } catch (err) {
-                return Boom.serverUnavailable("No placemark with this id");
+                return Boom.serverUnavailable("No [id] with this id");
             }
         },
         tags: ["api"],
-        description: "Delete a placemark",
+        description: "Delete a [id]",
         validate: { params: { id: IdSpec }, failAction: validationError },
     },
 
@@ -137,7 +135,7 @@ export const placemarkApi = {
                 if (newPlacemark) {
                     return h.response(newPlacemark).code(200);
                 }
-                return Boom.badImplementation("error creating placemark");
+                return Boom.badImplementation("error creating [id]");
             } catch (err) {
                 return Boom.serverUnavailable("Database Error create");
             }
