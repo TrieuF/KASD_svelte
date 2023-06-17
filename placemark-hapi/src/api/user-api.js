@@ -3,6 +3,7 @@ import {db} from "../models/db.js";
 import {validationError} from "./logger.js";
 import {IdSpec, JwtAuth, UserArray, UserCredentialsSpec, UserSpec, UserSpecPlus} from "../models/joi-schemas.js";
 import {createToken} from "./jwt-utils.js";
+import {imageStore} from "../models/image-store.js";
 
 export const userApi = {
     find: {
@@ -151,5 +152,17 @@ export const userApi = {
                 return Boom.serverUnavailable("Database Error");
             }
         }
-    }
+    },
+
+    allImages: {
+        auth: false,
+        handler: async function (request, h) {
+            try {
+                const images= imageStore.getAllImages();
+                return images;
+            } catch (err) {
+                return Boom.serverUnavailable("Database Error");
+            }
+        },
+    },
 };

@@ -106,4 +106,14 @@ export const placemarkService = {
             return [];
         }
     },
+
+    async getAllImages(){
+        try{
+            const response = await axios.get(`${this.baseUrl}/api/allimages`);
+            return response.data;
+        } catch(error){
+            return [];
+        }
+    },
 };
+
