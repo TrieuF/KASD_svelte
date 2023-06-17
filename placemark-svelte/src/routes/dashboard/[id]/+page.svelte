@@ -3,6 +3,7 @@
     import MainMenu from "$lib/MainMenu.svelte";
 
     export let data;
+
 </script>
 
 <Header>

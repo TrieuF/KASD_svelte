@@ -97,4 +97,13 @@ export const placemarkService = {
             return [];
         }
     },
+
+    async getAnalytics(){
+        try{
+            const response = await axios.get(`${this.baseUrl}/api/analytics`);
+            return response.data;
+        } catch(error){
+            return [];
+        }
+    },
 };
