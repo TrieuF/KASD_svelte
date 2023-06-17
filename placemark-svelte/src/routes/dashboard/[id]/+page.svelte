@@ -1,8 +1,8 @@
 <script>
     import Header from "$lib/Header.svelte";
     import MainMenu from "$lib/MainMenu.svelte";
+
     export let data;
-    import PlacemarkImage from "$lib/PlacemarkImage.svelte";
 </script>
 
 <Header>
