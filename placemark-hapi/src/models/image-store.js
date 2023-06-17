@@ -12,6 +12,10 @@ const credentials = {
 cloudinary.config(credentials);
 
 export const imageStore = {
+    getAllImages: async function(){
+        const result = await cloudinary.v2.api.resources();
+        return result.resources;
+    },
 
     uploadImage: async function(imagefile) {
         writeFileSync("./public/temp.img", imagefile);
