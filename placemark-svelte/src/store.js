@@ -5,3 +5,5 @@ export const user = writable({
     token: "",
     isAdmin: "",
 });
+
+export const latestPlacemark = writable(null);

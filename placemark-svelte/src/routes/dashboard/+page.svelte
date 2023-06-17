@@ -1,6 +1,7 @@
 <script>
     import Header from "$lib/Header.svelte";
     import MainMenu from "$lib/MainMenu.svelte";
+    import PlacemarkMap from "$lib/PlacemarkMap.svelte";
 </script>
 
 <Header>
@@ -10,7 +11,7 @@
 <section class="section">
     <div class="columns is-vcentered ">
         <div class="column">
-            <img alt="" src="/googlemaps.png" height="204" width="227">
+            <PlacemarkMap mapname="placemark-map" layer=""/>
         </div>
         <div class="column">
             <div class="buttons are-large">

@@ -3,15 +3,19 @@
     import { LeafletMap } from "../services/leaflet-map";
     import { onMount } from "svelte";
     import {placemarkService} from "../services/placemark-service.js";
+    import {latestPlacemark} from "../store.js";
 
     const mapConfig = {
-        location: { lat: 49.00346449404031, lng: 12.095848553970594 },
+        location: { lat: 49.022676838235945, lng: 12.097234021044144 },
         zoom: 8,
         minZoom: 1
     };
+    let map;
+    export let mapname="";
+    export let layer= "";
 
     onMount(async () => {
-        const map = new LeafletMap("placemark-map", mapConfig);
+        map = new LeafletMap(mapname, mapConfig, layer);
         map.showZoomControl();
         map.addLayerGroup("Placemarks");
         map.showLayerControl();
@@ -20,6 +24,13 @@
             map.addMarker({ lat: placemark.location.lat, lng: placemark.location.lng }, placemark.name, "Placemarks");
         });
     });
+
+    latestPlacemark.subscribe((placemark) => {
+        if (placemark && map) {
+            map.addMarker({ lat: placemark.location.lat, lng: placemark.location.lng }, placemark.name, "Placemarks");
+            map.moveTo(8, { lat: placemark.location.lat, lng: placemark.location.lng });
+        }
+    });
 </script>
 
-<div class="box" id="placemark-map" style="height:75vh"></div>
+<div class="box" id={mapname} style="height:75vh"></div>
