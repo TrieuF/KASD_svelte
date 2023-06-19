@@ -13,8 +13,9 @@ export const placemarkService = {
                 user.set({
                     email: email,
                     token: response.data.token,
+                    id: response.data.id
                 });
-                localStorage.placemark = JSON.stringify({email:email, token:response.data.token});
+                localStorage.placemark = JSON.stringify({email:email, token:response.data.token, id: response.data.id});
                 return true;
             }
             return false;
@@ -28,6 +29,7 @@ export const placemarkService = {
         user.set({
             email: "",
             token: "",
+            id: "",
         });
         axios.defaults.headers.common["Authorization"] = "";
         localStorage.removeItem("placemark");
@@ -50,12 +52,13 @@ export const placemarkService = {
     },
 
     reload() {
-        const donationCredentials = localStorage.donation;
-        if (donationCredentials) {
-            const savedUser = JSON.parse(donationCredentials);
+        const placemarkCredentials = localStorage.donation;
+        if (placemarkCredentials) {
+            const savedUser = JSON.parse(placemarkCredentials);
             user.set({
                 email: savedUser.email,
                 token: savedUser.token,
+                id: savedUser.id
             });
             axios.defaults.headers.common["Authorization"] = "Bearer " + savedUser.token;
         }
@@ -70,10 +73,10 @@ export const placemarkService = {
         }
     },
 
-    async addPlacemark(placemark) {
+    async addPlacemark(id, placemark) {
         try {
-            const response = await axios.post(`${this.baseUrl}/api/placemarks`, placemark);
-            const createdplacemark = {
+            const response = await axios.post(`${this.baseUrl}/api/users/${id}/placemarks`, placemark);
+            const newplacemark = {
                 name: placemark.name,
                 description: placemark.description,
                 location: {
@@ -81,8 +84,9 @@ export const placemarkService = {
                     lng: placemark.location.lng,
                 },
                 category: placemark.category,
+                _id: response.data._id
             }
-            latestPlacemark.set(createdplacemark);
+            latestPlacemark.set(newplacemark);
             return response.status === 200;
         } catch (error) {
             return false;

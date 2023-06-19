@@ -51,7 +51,13 @@ export const placemarkApi = {
         handler: async function (request, h) {
             try {
                 const placemark = request.payload;
-                const userid = request.auth.credentials._id;
+                let userid;
+                if(!request.params.id) {
+                    userid = request.auth.credentials._id;
+                }
+                else{
+                    userid = request.params.id;
+                }
                 const newPlacemark = await db.placemarkStore.addPlacemark(userid, placemark);
                 if (newPlacemark) {
                     return h.response(newPlacemark).code(200);
@@ -113,32 +119,5 @@ export const placemarkApi = {
         },
         tags: ["api"],
         description: "Delete all PlacemarkApi",
-    },
-
-    createnoid: {
-        auth: false,
-        handler: async function (request, h) {
-            try {
-                const placemark = {
-                    name: request.payload.name,
-                    description: request.payload.description,
-                    location: {
-                        lat: request.payload.location.lat,
-                        lng: request.payload.location.lng,
-                    },
-                    category: request.payload.category,
-                    img: ""
-                }
-                const usertoken = request.payload.usertoken;
-                const user = decodeToken(usertoken);
-                const newPlacemark = await db.placemarkStore.addPlacemark(user.userId, placemark);
-                if (newPlacemark) {
-                    return h.response(newPlacemark).code(200);
-                }
-                return Boom.badImplementation("error creating [id]");
-            } catch (err) {
-                return Boom.serverUnavailable("Database Error create");
-            }
-        },
     },
 };

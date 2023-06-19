@@ -4,7 +4,7 @@
     import {charttype} from "../../store.js";
     import {goto} from "$app/navigation";
 
-    let charttypes = ["bar", "pie", "line", "percentage"];
+    let charttypes = [{name: "Bar", value: "bar"}, {name: "Pie", value: "pie"}, {name:"Line", value:"line"}, {name:"Percentage", value:"percentage"}];
     let selectedchart = "";
 
     async function selecttype() {
@@ -25,7 +25,7 @@
             <div class="select">
                 <select bind:value={selectedchart} id="charttype">
                     {#each charttypes as chart}
-                        <option>{chart}</option>
+                        <option value={chart.value}>{chart.name}</option>
                     {/each}
                 </select>
             </div>

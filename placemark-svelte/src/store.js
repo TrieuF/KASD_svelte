@@ -3,7 +3,7 @@ import {writable} from "svelte/store";
 export const user = writable({
     email: "",
     token: "",
-    isAdmin: "",
+    id: "",
 });
 
 export const latestPlacemark = writable(null);

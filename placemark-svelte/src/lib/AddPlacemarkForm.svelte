@@ -13,7 +13,7 @@
 
     let message = "Add a Placemark";
     async function addPlacemark() {
-        if (name && longitude && latitude && selectedCategory && $user.token) {
+        if (name && longitude && latitude && selectedCategory && $user.id) {
             const placemarktoadd = {
                 name: name,
                 description: description,
@@ -22,16 +22,15 @@
                     lng: longitude,
                 },
                 category: selectedCategory,
-                usertoken: $user.token
             }
-            const success= await placemarkService.addPlacemark(placemarktoadd);
+            const success= await placemarkService.addPlacemark($user.id, placemarktoadd);
             if (!success) {
                 message = "Adding not completed - some error occurred";
                 return;
             }
             message = "You added a Placemark";
         } else {
-            message = "Please select name, location and category";
+            message = "Please select name, location and category OR Login";
         }
     }
 </script>
