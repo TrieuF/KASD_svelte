@@ -119,5 +119,24 @@ export const placemarkService = {
             return [];
         }
     },
+
+    async deleteImages(id){
+        try{
+            const response = await axios.delete(`${this.baseUrl}/api/placemarks/${id}/deleteimages`);
+            console.log(response)
+            return response.data;
+        } catch(error){
+            return [];
+        }
+    },
+
+    async uploadImages(id, uploadedfiles){
+        try{
+            const response = await axios.post(`${this.baseUrl}/api/placemarks/${id}/uploadimages`, uploadedfiles);
+            return response.data;
+        } catch(error){
+            return [];
+        }
+    }
 };
 

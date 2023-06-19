@@ -53,13 +53,11 @@ export const editController = {
                     if (Object.keys(file).length > 0 && Object.keys(file).length <=11) {
                         for (const element of file) {
                             const url = await imageStore.uploadImage(element);
-                            placemark.img = url;
                             await db.placemarkStore.updatePlacemarkimg(placemark, url);
                         }
                     }
                     else if(Object.keys(file).length > 0){
                         const url = await imageStore.uploadImage(file);
-                        placemark.img = url;
                         await db.placemarkStore.updatePlacemarkimg(placemark, url);
                     }
                 }
