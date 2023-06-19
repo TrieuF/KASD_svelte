@@ -7,7 +7,8 @@ dotenv.config();
 const credentials = {
     cloud_name: process.env.cloudinary_name,
     api_key: process.env.cloudinary_key,
-    api_secret: process.env.cloudinary_secret
+    api_secret: process.env.cloudinary_secret,
+    public_id: "",
 };
 cloudinary.config(credentials);
 
@@ -24,6 +25,9 @@ export const imageStore = {
     },
 
     deleteImage: async function(img) {
-        await cloudinary.v2.uploader.destroy(img, {});
+        const shorturl = img.slice(0, -4);
+        const words = shorturl.split("/")
+        const public_id = words.pop();
+        await cloudinary.v2.uploader.destroy(public_id, {});
     }
 };

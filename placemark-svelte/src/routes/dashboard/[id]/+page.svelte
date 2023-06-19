@@ -56,11 +56,13 @@
     </div>
     <div class="column">
         <div class="card">
-            <div class="card-image">
-                <figure class="image is-256x256">
-                    <img src={data.placemark.img} alt="">
-                </figure>
-            </div>
+            {#each data.placemark.img as img}
+                <div class="card-image">
+                    <figure class="image is-256x256">
+                        <img src={img} alt="">
+                    </figure>
+                </div>
+            {/each}
         </div>
     </div>
 </section>
