@@ -41,7 +41,7 @@ export const seedData = {
                 lng: 31.13430,
             },
             category: "Wonder-of-the-World",
-            img: "",
+            img: [],
             createdBy: "->users.maggie"
         },
         wall: {
@@ -52,7 +52,7 @@ export const seedData = {
                 lng: 116.56647,
             },
             category: "Wonder-of-the-World",
-            img: "",
+            img: [],
             createdBy: "->users.maggie"
         },
         taj: {
@@ -63,7 +63,7 @@ export const seedData = {
                 lng: 78.04214
             },
             category: "Wonder-of-the-World",
-            img: "",
+            img: [],
             createdBy: "->users.maggie"
         },
         petra: {
@@ -74,7 +74,7 @@ export const seedData = {
                 lng: 35.44432,
             },
             category: "Wonder-of-the-World",
-            img: "",
+            img: [],
             createdBy: "->users.maggie"
         },
         macchu: {
@@ -85,7 +85,7 @@ export const seedData = {
                 lng: -72.49707,
             },
             category: "Wonder-of-the-World",
-            img: "",
+            img: [],
             createdBy: "->users.maggie"
         },
         maya: {
@@ -96,7 +96,7 @@ export const seedData = {
                 lng: -88.56776,
             },
             category: "Wonder-of-the-World",
-            img: "",
+            img: [],
             createdBy: "->users.maggie"
         },
         colosseum: {
@@ -107,7 +107,7 @@ export const seedData = {
                 lng: 12.49137,
             },
             category: "Wonder-of-the-World",
-            img: "",
+            img: [],
             createdBy: "->users.maggie"
         },
     },

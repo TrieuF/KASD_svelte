@@ -46,7 +46,7 @@ export const PlacemarkSpecReal = Joi.object()
         },
         category: Joi.string().required().example("Wonder of the World"),
         createdBy: IdSpec.optional(),
-        img: Joi.string().allow("").optional().example(""),
+        img: Joi.array().items(Joi.string().allow("").example("")).optional(),
     })
     .label("PlacemarkReal")
 

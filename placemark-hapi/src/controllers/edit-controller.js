@@ -50,10 +50,15 @@ export const editController = {
                 const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
                 const file = request.payload.imagefile;
                 if (loggedInUser.isAdmin || placemark.createdBy.equals(loggedInUser._id)) {
-                    if (Object.keys(file).length > 0) {
-                        const url = await imageStore.uploadImage(request.payload.imagefile);
-                        placemark.img = url;
-                        await db.placemarkStore.updatePlacemarkimg(placemark);
+                    if (Object.keys(file).length > 0 && Object.keys(file).length <=11) {
+                        for (const element of file) {
+                            const url = await imageStore.uploadImage(element);
+                            await db.placemarkStore.updatePlacemarkimg(placemark, url);
+                        }
+                    }
+                    else if(Object.keys(file).length > 0){
+                        const url = await imageStore.uploadImage(file);
+                        await db.placemarkStore.updatePlacemarkimg(placemark, url);
                     }
                 }
                 return h.redirect(`/placemark/${request.params.id}`);
@@ -76,9 +81,10 @@ export const editController = {
                 const loggedInUser = request.auth.credentials;
                 const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
                 if (loggedInUser.isAdmin || placemark.createdBy.equals(loggedInUser._id)) {
-                    await imageStore.deleteImage(placemark.img);
-                    placemark.img = "";
-                    await db.placemarkStore.updatePlacemarkimg(placemark);
+                    for (let element of placemark.img) {
+                        await imageStore.deleteImage(element);
+                    }
+                    await db.placemarkStore.deletePlacemarkimgs(placemark);
                 }
                 return h.redirect(`/placemark/${request.params.id}`);
             } catch (err) {
