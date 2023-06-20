@@ -52,7 +52,7 @@ export const placemarkService = {
     },
 
     reload() {
-        const placemarkCredentials = localStorage.donation;
+        const placemarkCredentials = localStorage.placemark;
         if (placemarkCredentials) {
             const savedUser = JSON.parse(placemarkCredentials);
             user.set({
@@ -123,10 +123,9 @@ export const placemarkService = {
     async deleteImages(id){
         try{
             const response = await axios.delete(`${this.baseUrl}/api/placemarks/${id}/deleteimages`);
-            console.log(response)
             return response.data;
         } catch(error){
-            return [];
+            return false;
         }
     },
 
@@ -135,7 +134,7 @@ export const placemarkService = {
             const response = await axios.post(`${this.baseUrl}/api/placemarks/${id}/uploadimages`, uploadedfiles);
             return response.data;
         } catch(error){
-            return [];
+            return false;
         }
     }
 };

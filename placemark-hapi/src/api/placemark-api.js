@@ -26,7 +26,9 @@ export const placemarkApi = {
     },
 
     findOne: {
-        auth: false,
+        auth: {
+            strategy: "jwt",
+        },
         handler: async function (request, h) {
             try {
                 const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
@@ -117,21 +119,28 @@ export const placemarkApi = {
     },
 
     uploadimages: {
-        auth: false,
+        auth: {
+            strategy: "jwt",
+        },
         handler: async function (request, h) {
             try {
+                const loggedInUser = request.auth.credentials;
                 const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
                 const file = Object.values(request.payload)[0];
-                if (Object.keys(file).length > 0 && Object.keys(file).length <= 11) {
-                    for (const element of file) {
-                        const url = await imageStore.uploadImage(element);
+                if (loggedInUser.isAdmin || placemark.createdBy.equals(loggedInUser._id)) {
+                    if (Object.keys(file).length > 0 && Object.keys(file).length <= 11) {
+                        for (const element of file) {
+                            const url = await imageStore.uploadImage(element);
+                            await db.placemarkStore.updatePlacemarkimg(placemark, url);
+                        }
+                        return true;
+                    } else if (Object.keys(file).length > 0) {
+                        const url = await imageStore.uploadImage(file);
                         await db.placemarkStore.updatePlacemarkimg(placemark, url);
+                        return true;
                     }
-                } else if (Object.keys(file).length > 0) {
-                    const url = await imageStore.uploadImage(file);
-                    await db.placemarkStore.updatePlacemarkimg(placemark, url);
                 }
-                return true;
+                return false;
             } catch (err) {
                 console.log(err);
                 return false;
@@ -146,15 +155,21 @@ export const placemarkApi = {
     },
 
     deleteimages: {
-        auth: false,
+        auth: {
+            strategy: "jwt",
+        },
         handler: async function (request, h) {
             try {
+                const loggedInUser = request.auth.credentials;
                 const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
-                for (let element of placemark.img) {
-                    await imageStore.deleteImage(element);
+                if (loggedInUser.isAdmin || placemark.createdBy.equals(loggedInUser._id)) {
+                    for (let element of placemark.img) {
+                        await imageStore.deleteImage(element);
+                    }
+                    await db.placemarkStore.deletePlacemarkimgs(placemark);
+                    return true;
                 }
-                await db.placemarkStore.deletePlacemarkimgs(placemark);
-                return true;
+                return false;
             } catch (err) {
                 console.log(err);
                 return false;

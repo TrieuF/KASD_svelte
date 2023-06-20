@@ -27,7 +27,6 @@
 
     latestPlacemark.subscribe(async (placemark) => {
         if (placemark && map) {
-            console.log(placemark._id)
             await map.addMarker({ lat: placemark.location.lat, lng: placemark.location.lng }, placemark.name, "Placemarks", placemark._id);
             await map.moveTo(8, { lat: placemark.location.lat, lng: placemark.location.lng });
         }

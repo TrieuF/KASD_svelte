@@ -4,8 +4,8 @@
 
     let name = "";
     let description = "";
-    let longitude = "";
-    let latitude = "";
+    let longitude = 0;
+    let latitude = 0;
 
     let categoryList = ["Landscape-Feature", "National-monument", "Island", "Town", "City",
         "Forest", "River", "Bridge", "Entertainment-Venue", "Archaeological-Feature", "Others"];
@@ -13,7 +13,7 @@
 
     let message = "Add a Placemark";
     async function addPlacemark() {
-        if (name && longitude && latitude && selectedCategory && $user.id) {
+        if (name && selectedCategory && $user.id) {
             const placemarktoadd = {
                 name: name,
                 description: description,
