@@ -25,10 +25,10 @@
         });
     });
 
-    latestPlacemark.subscribe((placemark) => {
+    latestPlacemark.subscribe(async (placemark) => {
         if (placemark && map) {
-            map.addMarker({ lat: placemark.location.lat, lng: placemark.location.lng }, placemark.name, "Placemarks", placemark._id);
-            map.moveTo(8, { lat: placemark.location.lat, lng: placemark.location.lng });
+            await map.addMarker({ lat: placemark.location.lat, lng: placemark.location.lng }, placemark.name, "Placemarks", placemark._id);
+            await map.moveTo(8, { lat: placemark.location.lat, lng: placemark.location.lng });
         }
     });
 </script>

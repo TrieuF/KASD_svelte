@@ -1,9 +1,10 @@
 import Boom from "@hapi/boom";
-import { db } from "../models/db.js";
-import { validationError } from "./logger.js";
+import {db} from "../models/db.js";
+import {validationError} from "./logger.js";
 import Joi from "joi";
 import {IdSpec, PlacemarkArraySpec, PlacemarkSpecReal, PlacemarkSpecPlus, JwtAuth} from "../models/joi-schemas.js";
 import {decodeToken} from "./jwt-utils.js";
+import {imageStore} from "../models/image-store.js";
 
 export const placemarkApi = {
     find: {
@@ -19,29 +20,31 @@ export const placemarkApi = {
             }
         },
         tags: ["api"],
-        response: { schema: PlacemarkArraySpec, failAction: validationError },
+        response: {schema: PlacemarkArraySpec, failAction: validationError},
         description: "Get all placemarks",
         notes: "Returns all placemarks",
     },
 
     findOne: {
-        auth: false,
+        auth: {
+            strategy: "jwt",
+        },
         handler: async function (request, h) {
             try {
                 const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
                 if (!placemark) {
-                    return Boom.notFound("No [id] with this id");
+                    return Boom.notFound("No placemark with this id");
                 }
                 return placemark;
             } catch (err) {
-                return Boom.serverUnavailable("No [id] with this id");
+                return Boom.serverUnavailable("No placemark with this id");
             }
         },
         tags: ["api"],
-        description: "Find a [id]",
-        notes: "Returns a [id]",
-        validate: { params: { id: IdSpec }, failAction: validationError },
-        response: { schema: PlacemarkSpecPlus, failAction: validationError },
+        description: "Find a placemark",
+        notes: "Returns a placemark",
+        validate: {params: {id: IdSpec}, failAction: validationError},
+        response: {schema: PlacemarkSpecPlus, failAction: validationError},
     },
 
     create: {
@@ -51,21 +54,21 @@ export const placemarkApi = {
         handler: async function (request, h) {
             try {
                 const placemark = request.payload;
-                const userid = request.auth.credentials._id;
+                let userid = request.auth.credentials._id;
                 const newPlacemark = await db.placemarkStore.addPlacemark(userid, placemark);
                 if (newPlacemark) {
                     return h.response(newPlacemark).code(200);
                 }
-                return Boom.badImplementation("error creating [id]");
+                return Boom.badImplementation("error creating placemark");
             } catch (err) {
                 return Boom.serverUnavailable("Database Error create");
             }
         },
         tags: ["api"],
-        description: "Create a [id]",
-        notes: "Returns the newly created [id]",
-        validate: { payload: PlacemarkSpecReal, failAction: validationError },
-        response: { schema: PlacemarkSpecPlus, failAction: validationError },
+        description: "Create a placemark",
+        notes: "Returns the newly created placemark",
+        validate: {payload: PlacemarkSpecReal, failAction: validationError},
+        response: {schema: PlacemarkSpecPlus, failAction: validationError},
     },
 
     deleteOne: {
@@ -76,22 +79,22 @@ export const placemarkApi = {
             try {
                 const userid = request.auth.credentials._id;
                 const user = await db.userStore.getUserById(userid);
-                if (!user.isAdmin){
+                if (!user.isAdmin) {
                     return Boom.unauthorized("Not an Admin");
                 }
                 const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
                 if (!placemark) {
-                    return Boom.notFound("No [id] with this id");
+                    return Boom.notFound("No placemark with this id");
                 }
                 await db.placemarkStore.deletePlacemark(placemark._id);
                 return h.response().code(204);
             } catch (err) {
-                return Boom.serverUnavailable("No [id] with this id");
+                return Boom.serverUnavailable("No placemark with this id");
             }
         },
         tags: ["api"],
-        description: "Delete a [id]",
-        validate: { params: { id: IdSpec }, failAction: validationError },
+        description: "Delete a placemark",
+        validate: {params: {id: IdSpec}, failAction: validationError},
     },
 
     deleteAll: {
@@ -102,7 +105,7 @@ export const placemarkApi = {
             try {
                 const userid = request.auth.credentials._id;
                 const user = await db.userStore.getUserById(userid);
-                if (!user.isAdmin){
+                if (!user.isAdmin) {
                     return Boom.unauthorized("Not an Admin");
                 }
                 await db.placemarkStore.deleteAllPlacemarks();
@@ -115,30 +118,62 @@ export const placemarkApi = {
         description: "Delete all PlacemarkApi",
     },
 
-    createnoid: {
-        auth: false,
+    uploadimages: {
+        auth: {
+            strategy: "jwt",
+        },
         handler: async function (request, h) {
             try {
-                const placemark = {
-                    name: request.payload.name,
-                    description: request.payload.description,
-                    location: {
-                        lat: request.payload.location.lat,
-                        lng: request.payload.location.lng,
-                    },
-                    category: request.payload.category,
-                    img: ""
+                const loggedInUser = request.auth.credentials;
+                const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
+                const file = Object.values(request.payload)[0];
+                if (loggedInUser.isAdmin || placemark.createdBy.equals(loggedInUser._id)) {
+                    if (Object.keys(file).length > 0 && Object.keys(file).length <= 11) {
+                        for (const element of file) {
+                            const url = await imageStore.uploadImage(element);
+                            await db.placemarkStore.updatePlacemarkimg(placemark, url);
+                        }
+                        return true;
+                    } else if (Object.keys(file).length > 0) {
+                        const url = await imageStore.uploadImage(file);
+                        await db.placemarkStore.updatePlacemarkimg(placemark, url);
+                        return true;
+                    }
                 }
-                const usertoken = request.payload.usertoken;
-                const user = decodeToken(usertoken);
-                const newPlacemark = await db.placemarkStore.addPlacemark(user.userId, placemark);
-                if (newPlacemark) {
-                    return h.response(newPlacemark).code(200);
-                }
-                return Boom.badImplementation("error creating [id]");
+                return false;
             } catch (err) {
-                return Boom.serverUnavailable("Database Error create");
+                console.log(err);
+                return false;
             }
         },
+        payload: {
+            multipart: true,
+            output: "data",
+            maxBytes: 209715200,
+            parse: true,
+        },
+    },
+
+    deleteimages: {
+        auth: {
+            strategy: "jwt",
+        },
+        handler: async function (request, h) {
+            try {
+                const loggedInUser = request.auth.credentials;
+                const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
+                if (loggedInUser.isAdmin || placemark.createdBy.equals(loggedInUser._id)) {
+                    for (let element of placemark.img) {
+                        await imageStore.deleteImage(element);
+                    }
+                    await db.placemarkStore.deletePlacemarkimgs(placemark);
+                    return true;
+                }
+                return false;
+            } catch (err) {
+                console.log(err);
+                return false;
+            }
+        }
     },
 };

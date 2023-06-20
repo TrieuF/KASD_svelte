@@ -32,21 +32,21 @@ export const PlacemarkSpec = Joi.object()
         lng: Joi.number().min(-180).max(180).example(116.56647),
         category: Joi.string().required().example("Wonder of the World"),
         createdBy: IdSpec.optional(),
-        img: Joi.string().optional(),
+        img: Joi.array().items(Joi.string().allow("").example("")).optional(),
     })
     .label("PlacemarkPayload")
 
 export const PlacemarkSpecReal = Joi.object()
     .keys({
         name: Joi.string().required().example("Great Wall of China"),
-        description: Joi.string().required().example("a really long wall"),
+        description: Joi.string().required().allow("").example("a really long wall"),
         location: {
             lat: Joi.number().min(-90).max(90).example(40.44170),
             lng: Joi.number().min(-180).max(180).example(116.56647),
         },
         category: Joi.string().required().example("Wonder of the World"),
         createdBy: IdSpec.optional(),
-        img: Joi.string().allow("").optional().example(""),
+        img: Joi.array().items(Joi.string().allow("").example("")).optional(),
     })
     .label("PlacemarkReal")
 
@@ -61,5 +61,6 @@ export const JwtAuth = Joi.object() //needed later for jwt
     .keys({
         success: Joi.boolean().example("true").required(),
         token: Joi.string().example("eyJhbGciOiJND.g5YmJisIjoiaGYwNTNjAOhE.gCWGmY5-YigQw0DCBo").required(),
+        id: IdSpec,
     })
     .label("JwtAuth");
