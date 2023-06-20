@@ -32,7 +32,7 @@ export const PlacemarkSpec = Joi.object()
         lng: Joi.number().min(-180).max(180).example(116.56647),
         category: Joi.string().required().example("Wonder of the World"),
         createdBy: IdSpec.optional(),
-        img: Joi.string().optional(),
+        img: Joi.array().items(Joi.string().allow("").example("")).optional(),
     })
     .label("PlacemarkPayload")
 
