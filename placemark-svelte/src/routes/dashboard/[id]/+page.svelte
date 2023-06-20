@@ -100,7 +100,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-header-title">
-                    Upload Image or Delete all (Admin/Creator)
+                    Upload Images or Delete all (Admin/Creator)
                 </div>
             </div>
             {#each placemark.img as img}
