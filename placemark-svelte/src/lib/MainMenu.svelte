@@ -1,5 +1,5 @@
-<script>
-    import {user} from "../store";
+<script lang="ts">
+    import {user} from "../store.js";
 </script>
 
 <nav class="navbar" aria-label="dropdown navigation">
@@ -28,7 +28,7 @@
                     </div>
                     <hr class="navbar-divider">
                     <div class="navbar-item">
-                        {#if $user.email}
+                        {#if $user?.email}
                             <div class="is-size-7">{$user.email}</div>
                         {:else}
                             <div class="is-size-7">KASD_Svelte</div>

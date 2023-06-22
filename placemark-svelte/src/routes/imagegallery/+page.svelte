@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
     import Header from "$lib/Header.svelte";
     import MainMenu from "$lib/MainMenu.svelte";
-    import {placemarkService} from "../../services/placemark-service.js";
+    import {placemarkService} from "../../services/placemark-service.ts";
     import {onMount} from "svelte";
     let images= [];
 

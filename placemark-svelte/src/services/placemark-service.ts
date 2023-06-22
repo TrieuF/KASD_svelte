@@ -1,11 +1,11 @@
-// @ts-nocheck
 import axios from "axios";
 import {latestPlacemark, user} from "../store";
+import type {Placemark} from "./placemark-type";
 
 export const placemarkService = {
     baseUrl: "http://localhost:4000",
 
-    async login(email, password) {
+    async login(email: string, password: string): Promise<boolean> {
         try {
             const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, { email, password });
             axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
@@ -35,7 +35,7 @@ export const placemarkService = {
         localStorage.removeItem("placemark");
     },
 
-    async signup(firstName, lastName, email, password) {
+    async signup(firstName: string, lastName: string, email:string , password: string): Promise<boolean> {
         try {
             const userDetails = {
                 firstName: firstName,
@@ -64,7 +64,7 @@ export const placemarkService = {
         }
     },
 
-    async getAllPlacemarks(){
+    async getAllPlacemarks(): Promise<Placemark[]>{
         try{
             const response = await axios.get(`${this.baseUrl}/api/placemarks`);
             return response.data;
@@ -73,7 +73,7 @@ export const placemarkService = {
         }
     },
 
-    async addPlacemark(id, placemark) {
+    async addPlacemark(id: string, placemark: Placemark): Promise<boolean> {
         try {
             const response = await axios.post(`${this.baseUrl}/api/users/${id}/placemarks`, placemark);
             const newplacemark = {
@@ -93,12 +93,12 @@ export const placemarkService = {
         }
     },
 
-    async getPlacemark(id){
+    async getPlacemark(id: string){
         try{
             const response = await axios.get(`${this.baseUrl}/api/placemarks/${id}`);
             return response.data;
         } catch(error){
-            return [];
+            return null;
         }
     },
 
@@ -120,7 +120,7 @@ export const placemarkService = {
         }
     },
 
-    async deleteImages(id){
+    async deleteImages(id: string): Promise<boolean>{
         try{
             const response = await axios.delete(`${this.baseUrl}/api/placemarks/${id}/deleteimages`);
             return response.data;
@@ -129,7 +129,7 @@ export const placemarkService = {
         }
     },
 
-    async uploadImages(id, uploadedfiles){
+    async uploadImages(id:string , uploadedfiles: File[]): Promise<boolean>{
         try{
             const response = await axios.post(`${this.baseUrl}/api/placemarks/${id}/uploadimages`, uploadedfiles);
             return response.data;

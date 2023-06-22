@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
     import Header from "$lib/Header.svelte";
     import MainMenu from "$lib/MainMenu.svelte";
     import {onMount} from "svelte";
-    import {placemarkService} from "../../../services/placemark-service.js";
+    import {placemarkService} from "../../../services/placemark-service.ts";
     import {goto} from "$app/navigation";
 
     export let data;

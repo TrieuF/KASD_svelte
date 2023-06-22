@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import Header from "$lib/Header.svelte";
     import MainMenu from "$lib/MainMenu.svelte";
     import MultipleMaps from "$lib/MultipleMaps.svelte";

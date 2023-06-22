@@ -1,8 +1,9 @@
-<script>
-    import {placemarkService} from "../services/placemark-service.js";
+<script lang="ts">
+    // @ts-ignore
+    import {placemarkService} from "../services/placemark-service.ts";
     import Chart from 'svelte-frappe-charts';
     import {onMount} from "svelte";
-    import {charttype} from "../store.js";
+    import {charttype} from "../store.ts";
 
     let analyticsdata = {};
     onMount(async () => {
@@ -44,6 +45,6 @@
 </script>
 
 <h1 class="title is-4">Total:</h1>
-<Chart type={$charttype} data={data2}/>
+<Chart type={$charttype.selected} data={data2}/>
 <h1 class="title is-4">Placemark distribution:</h1>
-<Chart type={$charttype} data={data}/>
+<Chart type={$charttype.selected} data={data}/>

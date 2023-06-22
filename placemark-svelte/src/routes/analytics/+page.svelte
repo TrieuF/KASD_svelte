@@ -1,14 +1,16 @@
-<script>
+<script lang="ts">
     import Header from "$lib/Header.svelte";
     import MainMenu from "$lib/MainMenu.svelte";
-    import {charttype} from "../../store.js";
+    import {charttype} from "../../store.ts";
     import {goto} from "$app/navigation";
 
     let charttypes = [{name: "Bar", value: "bar"}, {name: "Pie", value: "pie"}, {name:"Line", value:"line"}, {name:"Percentage", value:"percentage"}];
     let selectedchart = "";
 
     async function selecttype() {
-        $charttype = selectedchart;
+        charttype.set({
+            selected: selectedchart
+        });
         goto("/charts");
     }
 </script>
