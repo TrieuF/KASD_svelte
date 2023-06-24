@@ -33,7 +33,7 @@
                 description: placemark.description,
                 location: {
                     lat: placemark.location.lat,
-                    lng: placemark.location.lat,
+                    lng: placemark.location.lng,
                 },
                 category: placemark.category,
             }
