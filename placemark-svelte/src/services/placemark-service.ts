@@ -7,7 +7,7 @@ export const placemarkService = {
 
     async login(email: string, password: string): Promise<boolean> {
         try {
-            const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, { email, password });
+            const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, {email, password});
             axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
             if (response.data.success) {
                 user.set({
@@ -15,7 +15,11 @@ export const placemarkService = {
                     token: response.data.token,
                     id: response.data.id
                 });
-                localStorage.placemark = JSON.stringify({email:email, token:response.data.token, id: response.data.id});
+                localStorage.placemark = JSON.stringify({
+                    email: email,
+                    token: response.data.token,
+                    id: response.data.id
+                });
                 return true;
             }
             return false;
@@ -35,7 +39,7 @@ export const placemarkService = {
         localStorage.removeItem("placemark");
     },
 
-    async signup(firstName: string, lastName: string, email:string , password: string): Promise<boolean> {
+    async signup(firstName: string, lastName: string, email: string, password: string): Promise<boolean> {
         try {
             const userDetails = {
                 firstName: firstName,
@@ -64,11 +68,11 @@ export const placemarkService = {
         }
     },
 
-    async getAllPlacemarks(): Promise<Placemark[]>{
-        try{
+    async getAllPlacemarks(): Promise<Placemark[]> {
+        try {
             const response = await axios.get(`${this.baseUrl}/api/placemarks`);
             return response.data;
-        } catch(error){
+        } catch (error) {
             return [];
         }
     },
@@ -93,49 +97,73 @@ export const placemarkService = {
         }
     },
 
-    async getPlacemark(id: string){
-        try{
+    async getPlacemark(id: string) {
+        try {
             const response = await axios.get(`${this.baseUrl}/api/placemarks/${id}`);
             return response.data;
-        } catch(error){
+        } catch (error) {
             return null;
         }
     },
 
-    async getAnalytics(){
-        try{
+    async getAnalytics() {
+        try {
             const response = await axios.get(`${this.baseUrl}/api/analytics`);
             return response.data;
-        } catch(error){
+        } catch (error) {
             return [];
         }
     },
 
-    async getAllImages(){
-        try{
+    async getAllImages() {
+        try {
             const response = await axios.get(`${this.baseUrl}/api/allimages`);
             return response.data;
-        } catch(error){
+        } catch (error) {
             return [];
         }
     },
 
-    async deleteImages(id: string): Promise<boolean>{
-        try{
+    async deleteImages(id: string): Promise<boolean> {
+        try {
             const response = await axios.delete(`${this.baseUrl}/api/placemarks/${id}/deleteimages`);
             return response.data;
-        } catch(error){
+        } catch (error) {
             return false;
         }
     },
 
-    async uploadImages(id:string , uploadedfiles: File[]): Promise<boolean>{
-        try{
+    async uploadImages(id: string, uploadedfiles: File[]): Promise<boolean> {
+        try {
             const response = await axios.post(`${this.baseUrl}/api/placemarks/${id}/uploadimages`, uploadedfiles);
             return response.data;
-        } catch(error){
+        } catch (error) {
             return false;
         }
-    }
+    },
+
+    async deletePlacemark(id: string) {
+        try {
+            const placemarkCredentials = localStorage.placemark;
+            if (placemarkCredentials) {
+                const savedUser = JSON.parse(placemarkCredentials);
+                console.log(savedUser)
+                const res = await axios.delete(`${this.baseUrl}/api/placemarks/${id}`, {data: savedUser});
+                return res.status == 204;
+            }
+            return false;
+        } catch (error) {
+            return false;
+        }
+    },
+
+    async editPlacemark(id: string, placemarktochange: Placemark) {
+        try {
+            const res = await axios.post(`${this.baseUrl}/api/placemarks/${id}`, placemarktochange);
+            return res;
+        } catch (error) {
+            return false;
+        }
+    },
 };
 

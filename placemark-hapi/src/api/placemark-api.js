@@ -73,18 +73,24 @@ export const placemarkApi = {
 
     deleteOne: {
         auth: {
-            strategy: "jwt",
+            strategy: "jwt"
         },
         handler: async function (request, h) {
             try {
-                const userid = request.auth.credentials._id;
-                const user = await db.userStore.getUserById(userid);
-                if (!user.isAdmin) {
-                    return Boom.unauthorized("Not an Admin");
+                let userid;
+                if(request.payload){
+                    userid= request.payload.id
                 }
+                else {
+                    userid = request.auth.credentials._id;
+                }
+                const user = await db.userStore.getUserById(userid);
                 const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
                 if (!placemark) {
                     return Boom.notFound("No placemark with this id");
+                }
+                else if (!user.isAdmin && user._id !== placemark.createdBy) {
+                    return Boom.unauthorized("Not an Admin or Creator");
                 }
                 await db.placemarkStore.deletePlacemark(placemark._id);
                 return h.response().code(204);
@@ -167,6 +173,27 @@ export const placemarkApi = {
                         await imageStore.deleteImage(element);
                     }
                     await db.placemarkStore.deletePlacemarkimgs(placemark);
+                    return true;
+                }
+                return false;
+            } catch (err) {
+                console.log(err);
+                return false;
+            }
+        }
+    },
+
+    edit: {
+        auth: {
+            strategy: "jwt",
+        },
+        handler: async function (request, h) {
+            try {
+                const loggedInUser = request.auth.credentials;
+                const changedplacemark = request.payload;
+                const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
+                if (loggedInUser.isAdmin || placemark.createdBy.equals(loggedInUser._id)) {
+                    await db.placemarkStore.updatePlacemark(placemark, changedplacemark);
                     return true;
                 }
                 return false;

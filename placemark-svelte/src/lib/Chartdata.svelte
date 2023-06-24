@@ -4,6 +4,7 @@
     import Chart from 'svelte-frappe-charts';
     import {onMount} from "svelte";
     import {charttype} from "../store.ts";
+    import type {ChartData} from "../services/charts";
 
     let analyticsdata = {};
     onMount(async () => {
@@ -24,7 +25,7 @@
         data.datasets[0].values[11] = analyticsdata.otherslength;
     });
 
-    let data2 = {
+    let data2:ChartData = {
         labels: ['Users','Placemarks'],
         datasets: [
             {
@@ -33,7 +34,7 @@
         ]
     }
 
-    let data = {
+    let data:ChartData = {
         labels: ["Landscape-Feature", "National-monument", "Island", "Town", "City",
             "Forest", "River", "Bridge", "Entertainment-Venue", "Archaeological-Feature", "Wonder-of-the-World", "Others"],
         datasets: [

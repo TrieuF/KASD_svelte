@@ -8,13 +8,14 @@
     export let data;
     let placemark = {
         name: "",
-        descriptiopn: "",
+        description: "",
         location: {
             lat: 0,
             lng: 0,
         },
         category: "",
-        img: []
+        img: [],
+        _id: "",
     };
     var conditions = {current: {weather: [{main: 0}], temp: 0}};
     const apiKey = import.meta.env.VITE_openweatherapi;
@@ -47,14 +48,14 @@
 
     async function deleteImages() {
         const response = await placemarkService.deleteImages(placemark._id);
-        if(response){
+        if (response) {
             await goto("/dashboard")
         }
     }
 
     async function uploadImages() {
         const response = await placemarkService.uploadImages(placemark._id, files);
-        if(response){
+        if (response) {
             await goto("/dashboard")
         }
     }
@@ -95,6 +96,9 @@
                 <p class="subtitle is-6">{conditions.current.temp} °C</p>
             </div>
         </div>
+        <a href="/dashboard/{placemark._id}/edit" class="button is-info">
+            <span>Edit (Admin/Creator only)</span>
+        </a>
     </div>
     <div class="column">
         <div class="card">
