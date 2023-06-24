@@ -1,5 +1,3 @@
-<script>
-</script>
 
 <nav class="navbar" aria-label="dropdown navigation">
     <div class="navbar-menu">

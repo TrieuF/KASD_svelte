@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 import * as L from "leaflet";
+import type {mapconf} from "./placemark-type";
 
 const apiKey= import.meta.env.VITE_openweatherapi;
 
@@ -39,7 +40,7 @@ export class LeafletMap {
         }),
     };
 
-    constructor(id, descriptor, activeLayer="") {
+    constructor(id:string , descriptor:mapconf, activeLayer="") {
         let defaultLayer = this.baseLayers.Terrain;
         if (activeLayer) {
             defaultLayer = this.baseLayers[activeLayer];
@@ -58,7 +59,7 @@ export class LeafletMap {
         this.imap.addLayer(layer);
     }
 
-    addLayerGroup(title) {
+    addLayerGroup(title:string) {
         this.overlays[title] = L.layerGroup([]);
         this.imap.addLayer(this.overlays[title]);
     }
@@ -84,7 +85,7 @@ export class LeafletMap {
         this.imap.setView(new L.LatLng(location.lat, location.lng), 8);
     }
 
-    async addMarker(location, popupText = "", layerTitle = "default", placemarkid) {
+    async addMarker(location:{lat:number; lng: number}, popupText = "", layerTitle = "default", placemarkid:string) {
         let group = {};
         let marker = L.marker([location.lat, location.lng]);
         if (popupText) {
@@ -101,7 +102,7 @@ export class LeafletMap {
                 .then((data) => {
                     conditions = data;});
             popup.setContent(popupText + "<br>Weather: " +conditions.current.weather[0].main + "<br>Temperature: " + conditions.current.temp + "°C"
-            + "<br><a class='button' href='/dashboard/"+placemarkid +"'>Details<a/>" );
+            + "<br><a class='button' href='/dashboard/"+placemarkid +"'>Details<a/><a class='button' href='/dashboard/"+placemarkid +"/delete'><i class=\"fas fa-trash\"></i><a/>" );
             marker.bindPopup(popup);
         }
         if (!this.overlays[layerTitle]) {

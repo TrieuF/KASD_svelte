@@ -1,6 +1,6 @@
-<script>
-    import { placemarkService } from "../services/placemark-service";
-    import { user} from "../store.js";
+<script lang="ts">
+    import { placemarkService } from "../services/placemark-service.js";
+    import { user} from "../store.ts";
 
     let name = "";
     let description = "";
@@ -13,7 +13,7 @@
 
     let message = "Add a Placemark";
     async function addPlacemark() {
-        if (name && selectedCategory && $user.id) {
+        if (name && selectedCategory && $user?.id) {
             const placemarktoadd = {
                 name: name,
                 description: description,

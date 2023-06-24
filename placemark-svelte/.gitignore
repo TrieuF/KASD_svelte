@@ -7,7 +7,7 @@ node_modules
 /package
 .env
 .env.*
-../placemark-hapi/.env
 !.env.example
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+../placemark-hapi/kasd-svelte-89aa3f21b818.json

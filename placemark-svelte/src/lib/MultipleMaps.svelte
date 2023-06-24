@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import PlacemarkMap from "$lib/PlacemarkMap.svelte";
 </script>
 

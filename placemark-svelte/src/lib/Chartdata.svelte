@@ -1,8 +1,10 @@
-<script>
-    import {placemarkService} from "../services/placemark-service.js";
+<script lang="ts">
+    // @ts-ignore
+    import {placemarkService} from "../services/placemark-service.ts";
     import Chart from 'svelte-frappe-charts';
     import {onMount} from "svelte";
-    import {charttype} from "../store.js";
+    import {charttype} from "../store.ts";
+    import type {ChartData} from "../services/charts";
 
     let analyticsdata = {};
     onMount(async () => {
@@ -23,7 +25,7 @@
         data.datasets[0].values[11] = analyticsdata.otherslength;
     });
 
-    let data2 = {
+    let data2:ChartData = {
         labels: ['Users','Placemarks'],
         datasets: [
             {
@@ -32,7 +34,7 @@
         ]
     }
 
-    let data = {
+    let data:ChartData = {
         labels: ["Landscape-Feature", "National-monument", "Island", "Town", "City",
             "Forest", "River", "Bridge", "Entertainment-Venue", "Archaeological-Feature", "Wonder-of-the-World", "Others"],
         datasets: [
@@ -44,6 +46,6 @@
 </script>
 
 <h1 class="title is-4">Total:</h1>
-<Chart type={$charttype} data={data2}/>
+<Chart type={$charttype.selected} data={data2}/>
 <h1 class="title is-4">Placemark distribution:</h1>
-<Chart type={$charttype} data={data}/>
+<Chart type={$charttype.selected} data={data}/>
