@@ -1,0 +1,1 @@
+This is part of the project for the "Advanced Full Stack Web Development" course (OTH Regensburg) using a copy of my KASD_Maps hapi project as the backend and using a svelte application for the frontend
