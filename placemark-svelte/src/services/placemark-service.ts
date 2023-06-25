@@ -165,5 +165,23 @@ export const placemarkService = {
             return false;
         }
     },
+
+    async getAllPlacemarksByName(name: string){
+        try {
+            const res = await axios.get(`${this.baseUrl}/api/placemarks/name/${name}`);
+            return res.data;
+        } catch (error) {
+            return [];
+        }
+    },
+
+    async getAllPlacemarksByCategory(category: string){
+        try {
+            const res = await axios.get(`${this.baseUrl}/api/placemarks/category/${category}`);
+            return res.data;
+        } catch (error) {
+            return [];
+        }
+    }
 };
 

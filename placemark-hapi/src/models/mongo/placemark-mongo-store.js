@@ -21,6 +21,11 @@ export const placemarkMongoStore = {
         return placemarks;
     },
 
+    async getAllPlacemarksByName(name) {
+        const placemarks = await Placemark.find({ name: {$regex: "^"+name}}).lean();
+        return placemarks;
+    },
+
     async getPlacemarkById(id) {
         if (id) {
             const placemark = await Placemark.findOne({ _id: id }).lean();
