@@ -203,4 +203,38 @@ export const placemarkApi = {
             }
         }
     },
+
+    findByName: {
+        auth: {
+            strategy: "jwt",
+        },
+        handler: async function (request, h) {
+            try {
+                const placemark = await db.placemarkStore.getAllPlacemarksByName(request.params.name);
+                if (!placemark) {
+                    return Boom.notFound("No placemarks with this name");
+                }
+                return placemark;
+            } catch (err) {
+                return Boom.serverUnavailable("No placemarks with this name");
+            }
+        },
+    },
+
+    findByCategory: {
+        auth: {
+            strategy: "jwt",
+        },
+        handler: async function (request, h) {
+            try {
+                const placemark = await db.placemarkStore.getAllPlacemarksByCategory(request.params.category);
+                if (!placemark) {
+                    return Boom.notFound("No placemarks with this category");
+                }
+                return placemark;
+            } catch (err) {
+                return Boom.serverUnavailable("No placemarks with this category");
+            }
+        },
+    },
 };
