@@ -24,6 +24,7 @@
     <th>Longitude</th>
     <th>Category</th>
     <th></th>
+    <th></th>
     </thead>
     <tbody>
     {#each placemarks as placemark}
@@ -44,7 +45,10 @@
                 {placemark.category}
             </td>
             <td>
-                <a class='button' href="/dashboard/{placemark._id}">Details<a/>
+                <a class='button' href="/dashboard/{placemark._id}">Details</a>
+            </td>
+            <td>
+                <a class='button' href="/dashboard/{placemark._id}/delete"> <i class="fas fa-trash"></i></a>
             </td>
         </tr>
     {/each}

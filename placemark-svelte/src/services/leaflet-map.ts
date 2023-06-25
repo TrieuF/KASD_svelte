@@ -102,7 +102,7 @@ export class LeafletMap {
                 .then((data) => {
                     conditions = data;});
             popup.setContent(popupText + "<br>Weather: " +conditions.current.weather[0].main + "<br>Temperature: " + conditions.current.temp + "°C"
-            + "<br><a class='button' href='/dashboard/"+placemarkid +"'>Details<a/><a class='button' href='/dashboard/"+placemarkid +"/delete'><i class=\"fas fa-trash\"></i><a/>" );
+            + "<br><a class='button' href='/dashboard/"+placemarkid +"'>Details</a><a class='button' href='/dashboard/"+placemarkid +"/delete'><i class=\"fas fa-trash\"></i></a>" );
             marker.bindPopup(popup);
         }
         if (!this.overlays[layerTitle]) {
