@@ -92,6 +92,10 @@ export const placemarkApi = {
                 else if (!user.isAdmin && user._id !== placemark.createdBy) {
                     return Boom.unauthorized("Not an Admin or Creator");
                 }
+                for (let element of placemark.img) {
+                    await imageStore.deleteImage(element);
+                }
+                await db.placemarkStore.deletePlacemarkimgs(placemark);
                 await db.placemarkStore.deletePlacemark(placemark._id);
                 return h.response().code(204);
             } catch (err) {
