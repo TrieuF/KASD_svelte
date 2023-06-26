@@ -16,7 +16,7 @@ export const apiRoutes = [
 
     { method: "POST", path: "/api/users/authenticate", config: userApi.authenticate },
     { method: "GET", path: "/api/analytics", config: userApi.analytics},
-    { method: "GET", path: "/api/allimages", config: userApi.allImages },
+    { method: "GET", path: "/api/allimages", config: placemarkApi.allImages },
     { method: "POST", path: "/api/placemarks/{id}/uploadimages", config: placemarkApi.uploadimages},
     { method: "DELETE", path: "/api/placemarks/{id}/deleteimages", config: placemarkApi.deleteimages},
     { method: "POST", path: "/api/placemarks/{id}", config: placemarkApi.edit },

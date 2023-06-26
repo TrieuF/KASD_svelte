@@ -154,15 +154,5 @@ export const userApi = {
         }
     },
 
-    allImages: {
-        auth: false,
-        handler: async function (request, h) {
-            try {
-                const images= imageStore.getAllImages();
-                return images;
-            } catch (err) {
-                return Boom.serverUnavailable("Database Error");
-            }
-        },
-    },
+
 };
