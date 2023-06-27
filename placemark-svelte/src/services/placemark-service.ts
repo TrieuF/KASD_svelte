@@ -81,17 +81,7 @@ export const placemarkService = {
     async addPlacemark(id: string, placemark: Placemark): Promise<boolean> {
         try {
             const response = await axios.post(`${this.baseUrl}/api/users/${id}/placemarks`, placemark);
-            const newplacemark = {
-                name: placemark.name,
-                description: placemark.description,
-                location: {
-                    lat: placemark.location.lat,
-                    lng: placemark.location.lng,
-                },
-                category: placemark.category,
-                _id: response.data._id
-            }
-            latestPlacemark.set(newplacemark);
+            latestPlacemark.set(response.data);
             return response.status === 200;
         } catch (error) {
             return false;
@@ -113,6 +103,7 @@ export const placemarkService = {
                 category: "",
                 img: [],
                 _id: "",
+                createdBy: "",
             };
         }
     },
