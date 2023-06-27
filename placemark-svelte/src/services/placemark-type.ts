@@ -26,6 +26,11 @@ export interface Placemark{
     category: string;
 }
 
+export interface Placemarkreturned extends Placemark{
+    _id: string,
+    img: Array<string>,
+}
+
 export interface mapconf {
     location: { lat: number, lng: number };
     zoom: number;

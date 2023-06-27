@@ -3,9 +3,10 @@
     import {placemarkService} from "../../../../services/placemark-service";
     import {user} from "../../../../store";
     import {goto} from "$app/navigation";
+    import type {Placemarkreturned} from "../../../../services/placemark-type";
 
     export let data;
-    let placemark = {
+    let placemark:Placemarkreturned= {
         name: "",
         description: "",
         location: {

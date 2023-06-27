@@ -4,18 +4,19 @@
     import {onMount} from "svelte";
     import {placemarkService} from "../../../services/placemark-service.ts";
     import {goto} from "$app/navigation";
+    import type {Placemarkreturned} from "../../../services/placemark-type";
 
     export let data;
-    let placemark = {
+    let placemark: Placemarkreturned={
         name: "",
-        description: "",
-        location: {
+            description: "",
+            location: {
             lat: 0,
-            lng: 0,
+                lng: 0,
         },
         category: "",
-        img: [],
-        _id: "",
+            img: [],
+            _id: "",
     };
     const apiKey = import.meta.env.VITE_openweatherapi;
     let conditions;
@@ -68,24 +69,24 @@
 <section class="section columns is-vcentered">
     <div class="column">
         <div class="name title">
-            {placemark.name}
+            {placemark?.name}
         </div>
         <div>
             <div>
                 <p class="title is-5">Description: </p>
-                <p class="subtitle is-6">{placemark.description}</p>
+                <p class="subtitle is-6">{placemark?.description}</p>
             </div>
             <div>
                 <p class="title is-5">Latitude: </p>
-                <p class="subtitle is-6">{placemark.location.lat}</p>
+                <p class="subtitle is-6">{placemark?.location.lat}</p>
             </div>
             <div>
                 <p class="title is-5">Longitude: </p>
-                <p class="subtitle is-6">{placemark.location.lng}</p>
+                <p class="subtitle is-6">{placemark?.location.lng}</p>
             </div>
             <div>
                 <p class="title is-5">Category: </p>
-                <p class="subtitle is-6">{placemark.category}</p>
+                <p class="subtitle is-6">{placemark?.category}</p>
             </div>
             <div>
                 <p class="title is-5">Weather: </p>
@@ -96,7 +97,7 @@
                 <p class="subtitle is-6">{conditions?.main?.temp} °C</p>
             </div>
         </div>
-        <a href="/dashboard/{placemark._id}/edit" class="button is-info">
+        <a href="/dashboard/{placemark?._id}/edit" class="button is-info">
             <span>Edit (Admin/Creator only)</span>
         </a>
     </div>
@@ -107,7 +108,7 @@
                     Upload Images or Delete all (Admin/Creator)
                 </div>
             </div>
-            {#each placemark.img as img}
+            {#each placemark?.img as img}
                 <div class="card-image">
                     <figure class="image is-256x256">
                         <img src={img} alt="">

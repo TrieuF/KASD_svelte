@@ -1,10 +1,10 @@
 import axios from "axios";
 import {latestPlacemark, user} from "../store";
-import type {Placemark} from "./placemark-type";
+import type {Placemark, Placemarkreturned} from "./placemark-type";
 
 export const placemarkService = {
-    //baseUrl: "http://localhost:4000",
-    baseUrl: "https://placemark-svelte-cu58.onrender.com",
+    baseUrl: "http://localhost:4000",
+    //baseUrl: "https://placemark-svelte-cu58.onrender.com",
 
     async login(email: string, password: string): Promise<boolean> {
         try {
@@ -69,7 +69,7 @@ export const placemarkService = {
         }
     },
 
-    async getAllPlacemarks(): Promise<Placemark[]> {
+    async getAllPlacemarks(): Promise<Placemarkreturned[]> {
         try {
             const response = await axios.get(`${this.baseUrl}/api/placemarks`);
             return response.data;
@@ -98,12 +98,22 @@ export const placemarkService = {
         }
     },
 
-    async getPlacemark(id: string) {
+    async getPlacemark(id: string): Promise<Placemarkreturned> {
         try {
             const response = await axios.get(`${this.baseUrl}/api/placemarks/${id}`);
             return response.data;
         } catch (error) {
-            return null;
+            return {
+                name: "",
+                description: "",
+                location: {
+                    lat: 0,
+                    lng: 0,
+                },
+                category: "",
+                img: [],
+                _id: "",
+            };
         }
     },
 
