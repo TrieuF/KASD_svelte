@@ -29,6 +29,7 @@ export interface Placemark{
 export interface Placemarkreturned extends Placemark{
     _id: string,
     img: Array<string>,
+    createdBy: string,
 }
 
 export interface mapconf {
