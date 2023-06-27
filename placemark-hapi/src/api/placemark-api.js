@@ -89,7 +89,7 @@ export const placemarkApi = {
                 if (!placemark) {
                     return Boom.notFound("No placemark with this id");
                 }
-                else if (!user.isAdmin && user._id !== placemark.createdBy) {
+                else if (!(user.isAdmin || placemark.createdBy.equals(user._id))) {
                     return Boom.unauthorized("Not an Admin or Creator");
                 }
                 for (let element of placemark.img) {
