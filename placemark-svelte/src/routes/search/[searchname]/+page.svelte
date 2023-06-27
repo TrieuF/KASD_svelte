@@ -3,8 +3,9 @@
     import {placemarkService} from "../../../services/placemark-service";
     import MainMenu from "$lib/MainMenu.svelte";
     import Header from "$lib/Header.svelte";
+    import type {Placemarkreturned} from "../../../services/placemark-type";
 
-    let placemarks= [];
+    let placemarks:Placemarkreturned[]= [];
     export let data
     onMount(async () => {
         placemarks = await placemarkService.getAllPlacemarksByName(data.search);
