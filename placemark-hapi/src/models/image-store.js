@@ -8,7 +8,6 @@ const credentials = {
     cloud_name: process.env.cloudinary_name,
     api_key: process.env.cloudinary_key,
     api_secret: process.env.cloudinary_secret,
-    public_id: "",
 };
 cloudinary.config(credentials);
 
@@ -21,7 +20,7 @@ export const imageStore = {
     uploadImage: async function(imagefile) {
         writeFileSync("./public/temp.img", imagefile);
         const response = await cloudinary.v2.uploader.upload("./public/temp.img");
-        return response.url;
+        return response.secure_url;
     },
 
     deleteImage: async function(img) {
