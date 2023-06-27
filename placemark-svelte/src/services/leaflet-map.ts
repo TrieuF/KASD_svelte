@@ -92,7 +92,7 @@ export class LeafletMap {
             var popup = L.popup();
             //var conditions = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lng}&appid=${apiKey}`);
             var conditions;
-            const requestUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${location.lat}&lon=${location.lng}&units=metric&appid=${apiKey}`;
+            const requestUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lng}&units=metric&appid=${apiKey}`;
             await fetch(requestUrl, {
                 mode: 'cors'
             })
@@ -101,7 +101,7 @@ export class LeafletMap {
                 })
                 .then((data) => {
                     conditions = data;});
-            popup.setContent(popupText + "<br>Weather: " +conditions.current.weather[0].main + "<br>Temperature: " + conditions.current.temp + "°C"
+            popup.setContent(popupText + "<br>Weather: " +conditions.weather[0].main + "<br>Temperature: " + conditions.main.temp + "°C"
             + "<br><a class='button' href='/dashboard/"+placemarkid +"'>Details</a><a class='button' href='/dashboard/"+placemarkid +"/delete'><i class=\"fas fa-trash\"></i></a>" );
             marker.bindPopup(popup);
         }

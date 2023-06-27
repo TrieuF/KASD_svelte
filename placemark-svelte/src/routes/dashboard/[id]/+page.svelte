@@ -17,11 +17,11 @@
         img: [],
         _id: "",
     };
-    var conditions = {current: {weather: [{main: 0}], temp: 0}};
     const apiKey = import.meta.env.VITE_openweatherapi;
+    let conditions;
     onMount(async () => {
         placemark = await placemarkService.getPlacemark(data.placemarkid);
-        const requestUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${placemark.location.lat}&lon=${placemark.location.lng}&units=metric&appid=${apiKey}`;
+        const requestUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${placemark.location.lat}&lon=${placemark.location.lng}&units=metric&appid=${apiKey}`;
         await fetch(requestUrl, {
             mode: 'cors'
         })
@@ -89,11 +89,11 @@
             </div>
             <div>
                 <p class="title is-5">Weather: </p>
-                <p class="subtitle is-6">{conditions.current.weather[0].main}</p>
+                <p class="subtitle is-6">{conditions?.weather[0].main}</p>
             </div>
             <div>
                 <p class="title is-5">Temperature: </p>
-                <p class="subtitle is-6">{conditions.current.temp} °C</p>
+                <p class="subtitle is-6">{conditions?.main?.temp} °C</p>
             </div>
         </div>
         <a href="/dashboard/{placemark._id}/edit" class="button is-info">
