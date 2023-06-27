@@ -148,7 +148,6 @@ export const placemarkService = {
             const placemarkCredentials = localStorage.placemark;
             if (placemarkCredentials) {
                 const savedUser = JSON.parse(placemarkCredentials);
-                console.log(savedUser)
                 const res = await axios.delete(`${this.baseUrl}/api/placemarks/${id}`, {data: savedUser});
                 return res.status == 204;
             }
