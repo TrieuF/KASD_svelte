@@ -3,8 +3,8 @@ import {latestPlacemark, user} from "../store";
 import type {Placemark, Placemarkreturned} from "./placemark-type";
 
 export const placemarkService = {
-    //baseUrl: "http://localhost:4000",
-    baseUrl: "https://placemark-svelte-cu58.onrender.com",
+    baseUrl: "http://localhost:4000",
+    //baseUrl: "https://placemark-svelte-cu58.onrender.com",
 
     async login(email: string, password: string): Promise<boolean> {
         try {
